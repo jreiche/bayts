@@ -5,7 +5,7 @@
 \title{Bayesian approach to combine multiple time series for near real-time forest change detection}
 \usage{
 bayts(tsL = list(NULL, ...), pdfL = list(NULL, ...), bwf = c(0.1, 0.9),
-  chi = 1, start = NULL, end = NULL)
+  chi = 0.5, start = NULL, end = NULL)
 }
 \arguments{
 \item{tsL}{list of object(s) of class \code{\link{ts}}.}
