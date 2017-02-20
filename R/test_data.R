@@ -24,9 +24,9 @@ NULL
 
 #' @title Sentinel-1 VV and Landsat NDVI raster brick
 #' 
-#' @description Sentinel-1 VV and Landsat NDVI time series raster brick; 09/2014 - 05/2016; Deforestation event in early 2016.  Two univariate time series objects of the class \link{ts}. 
+#' @description Sentinel-1 VV and Landsat NDVI time series raster brick; 09/2014 - 05/2016. Data has been taken from an area in Santa Cruz, Bolivia. Please contact Johannes Reiche (johannes.reiche@wur) for more information. 
 #' 
-#' @name s1_landsat_raster.rda
+#' @name s1vv_landsat_raster.rda
 #' 
 #' @usage data(s1vv_lndvi_raster)
 #' 
