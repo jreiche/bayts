@@ -2,20 +2,19 @@
 #' 
 #' @description Sentinel-1 VV and Landsat NDVI time series; 09/2014 - 05/2016; Deforestation event in early 2016.  Two univariate time series objects of the class \link{ts}. 
 #'
-#' @name s1_landsat_pixel.RData
+#' @name s1vv_lndvi_pixel.rda
 #' 
-#' @usage data(s1_landsat_pixel.RData)
+#' @usage data(s1vv_lndvi_pixel)
 #' 
 #' @author Johannes Reiche
 #' 
 #' @examples
-#' ## load test data
-#' load("s1_landsat_pixel.RData")
+#' # load test data
+#' data(s1vv_lndvi_pixel)
 #' 
-#'
 #' # create ts using bfastts (bfast package)
-#' tsS <- bfastts(s1,as.Date(s1_date),type=c("irregular"))
-#' tsL <- bfastts(landsat,as.Date(landsat_date),type=c("irregular"))
+#' tsS <- bfastts(s1vv_obs,as.Date(s1vv_date),type=c("irregular"))
+#' tsL <- bfastts(lndvi_obs,as.Date(lndvi_date),type=c("irregular"))
 #'
 #' # plot ts
 #' plotts(tsL=list(tsL,tsS),labL=list("Landsat NDVI","Sentinel-1 VV [dB]"))
@@ -27,17 +26,17 @@ NULL
 #' 
 #' @description Sentinel-1 VV and Landsat NDVI time series raster brick; 09/2014 - 05/2016; Deforestation event in early 2016.  Two univariate time series objects of the class \link{ts}. 
 #' 
-#' @name s1_landsat_raster.RData
+#' @name s1_landsat_raster.rda
 #' 
-#' @usage data(s1_landsat_raster.RData)
+#' @usage data(s1vv_lndvi_raster)
 #' 
 #' @author Johannes Reiche
 #' 
 #' @examples
 #' ## load test data
-#' load("s1_landsat_raster.RData")
+#' data(s1vv_lndvi_raster)
 #' 
-#' plot(s1,1)
+#' plot(s1vv,1)
 #' 
 
 NULL
