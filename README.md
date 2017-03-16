@@ -9,6 +9,8 @@ A detailed description of theapproach is provided in [Reiche et al. 2015,17]. A 
 
 HERE description from paper
 
+
+
 ![fig2_20052014](https://cloud.githubusercontent.com/assets/6399980/7251311/77775dc4-e82a-11e4-8b6b-083cc9051fb8.jpg)
 Figure 1. Schematic overview of MulTiFuse to fuse a univariate optical and SAR time series [Reiche et al. 2015](http://www.sciencedirect.com/science/article/pii/S0034425714003885).
 
@@ -28,6 +30,9 @@ Include pictures
 
 Include pictures
 
-## Authors
+## References
+Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
+
+Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (under review): Near-real time deforestation detection in tropical dry forest combining Landsat, Sentinel-1 and ALOS-2 PALSAR-2 time series. Remote Sensing of Environment. 
 
 ## License
