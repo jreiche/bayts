@@ -1,9 +1,9 @@
 # bayts
 
-Package for combining multiple univariate time series (e.g. optical and SAR) for deforestation detection, using a probalistic approach. 
+Package for combining multiple univariate time series (e.g. optical and SAR) for deforestation detection, using a probalistic approach. The probablistic approach has been published in XXX.
 
-### Probablistic approach for combining time series and near real-time deforstation detection
-The probablistic approach has been published in XXX, where it was used to fuse univariate Landsat NDVI, Sentinel-1 VV and ALSO-PALSAR HV time series for detecting deforestation in near real-time over a tropical dry forest site in Santa Cruz, Bolivia.
+## Probablistic approach for combining time series and near real-time deforstation detection
+, where it was used to fuse univariate Landsat NDVI, Sentinel-1 VV and ALSO-PALSAR HV time series for detecting deforestation in near real-time over a tropical dry forest site in Santa Cruz, Bolivia.
 
 A detailed description of theapproach is provided in [Reiche et al. 2015,17]. A brief description to fuse two univariate remote sensing time series (e.g. SAR and optical time series) is given below:
 
