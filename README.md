@@ -2,6 +2,8 @@
 
 Propabalistic approach (Reiche et al., 2015, 2017) to combine multiple optical and Radar satellite time series and to detect deforestation. The package includes functions to apply the approach to single pixel time series and to raster time series. Examples for both are provided below.
 
+! The implemented version is a reserach version that simulates .... stepwise, and allows to plot the entire time series.... therefore its performance is weak 
+
 ## Probablistic approach 
 The basic version of the probablistic approach has been published in Reiche et al., (2015). An improved version was published in Reiche et al. (under review). In Reiche et al., 2017, the probabalistic approach was used for the multi-sensor combination of Radar and optical data from Sentinel-1 and PALSAR-2 HV, together with Landsat for near-real time forest change detection in tropical dry forests in Bolivia. A brief description of the approach is provided below:
 
