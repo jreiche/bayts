@@ -1,8 +1,9 @@
-# bayts
+# bayts 
 
-Propabalistic approach (Reiche et al., 2015, 2017) to combine multiple optical and Radar satellite time series and to detect deforestation. The package includes functions to apply the approach to single pixel time series and to raster time series. Examples for both are provided below.
+Set of tools to apply the propabalistic approach of (Reiche et al., 2015, 2017) to combine combine multiple optical and Radar satellite time series and to detect deforestation in near real-time. The package includes functions to apply the approach to single pixel time series and to raster time series. Examples for both are provided below.
 
-! The implemented version is a reserach version that simulates .... stepwise, and allows to plot the entire time series.... therefore its performance is weak 
+### reserach version
+The package includes the research version of the tools with a weaker perforamce at large areas. The reserach version allows (i) to visualise and analyse the entire time series history and (ii) it stepwise applies the probablistic approach consecutively on each observation in the time series to emulate a near real-time scenario. 
 
 ## Probablistic approach 
 The basic version of the probablistic approach has been published in Reiche et al., (2015). An improved version was published in Reiche et al. (under review). In Reiche et al., 2017, the probabalistic approach was used for the multi-sensor combination of Radar and optical data from Sentinel-1 and PALSAR-2 HV, together with Landsat for near-real time forest change detection in tropical dry forests in Bolivia. A brief description of the approach is provided below:
@@ -78,13 +79,17 @@ plotBayts(bts$bayts,labL=list("Landsat NDVI","Sentinel-1 VV [dB]"),ylimL=list(c(
 ```r
 # (2c) plot time series of NF probabilities, including flagged and detected changes
 plotBaytsPNF(bts$bayts,start=start)
+```
 
+![fig](example1_fig3.JPG)<br />
+<sub>Figure 4. Time series of NF probabilities derived from the two original time series. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event. </sub> 
+
+```r
 # (2d) get time of change
 bts$change.flagged    # time at which change is flagged
 bts$change.confirmed  # time at which change is confirmed
 ```
-![fig](example1_fig3.JPG)<br />
-<sub>Figure 4. Time series of NF probabilities derived from the two original time series. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event. </sub> 
+
 
 ### Example 2: Area example (Deforestation over dry forest)
 
