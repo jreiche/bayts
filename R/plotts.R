@@ -42,7 +42,7 @@ plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, p
   } else {
     par(mar=c(5, 4, 4, (2+(l-1)*4)))
   }
-  options(warn=-1)
+
   for(i in 1:l){
     # get ts
     zts <- na.omit(as.zoo(tsL[[i]]))
@@ -104,5 +104,4 @@ plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, p
       }
     }
   }
-  options(warn=0)
 }

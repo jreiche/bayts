@@ -22,13 +22,13 @@ deseasonlized raster layer or raster brick
 Deseasonlize a single raster layer or each individual raster layer in a brick. "Deseasonlized pixel value" = "original pixel value" - "percentile of the distribution of the raster"
 }
 \examples{
-load("data/s1_landsat_raster.RData")
+data(s1vv_lndvi_raster)
 
-plot(s1,3)
+plot(s1vv,3)
 
-s1d <- deseasonalizeRaster(s1,p=0.95)
+s1vvd <- deseasonalizeRaster(s1vv,p=0.95)
 
-plot(s1d,3)
+plot(s1vvd,3)
 }
 \author{
 Johannes Reiche (Wageningen University)

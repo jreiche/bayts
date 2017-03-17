@@ -12,13 +12,13 @@
 #' @return deseasonlized raster layer or raster brick 
 
 #' @examples 
-#' load("data/s1_landsat_raster.RData")
+#' data(s1vv_lndvi_raster)
 #' 
-#' plot(s1,3)
+#' plot(s1vv,3)
 #' 
-#' s1d <- deseasonalizeRaster(s1,p=0.95)
+#' s1vvd <- deseasonalizeRaster(s1vv,p=0.95)
 #' 
-#' plot(s1d,3)
+#' plot(s1vvd,3)
 #' @export 
 
 

@@ -20,7 +20,6 @@
 #' plotts(tsL=list(tsL,tsS),labL=list("Landsat NDVI","Sentinel-1 VV [dB]"))
 #' plotts(tsL=list(tsL,tsS),labL=list("Landsat NDVI","Sentinel-1 VV [dB]"),ylimL=list(c(0,1),c(-13,-6)))
 
-NULL
 
 #' @title Sentinel-1 VV and Landsat NDVI raster brick test data
 #' 
@@ -40,5 +39,3 @@ NULL
 #' 
 #' plot(s1vv,1)
 #' 
-
-NULL
