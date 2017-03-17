@@ -1,6 +1,6 @@
 # bayts 
 
-Set of tools to apply the propabalistic approach of (Reiche et al., 2015, 2017) to combine combine multiple optical and Radar satellite time series and to detect deforestation in near real-time. The package includes functions to apply the approach to single pixel time series and to raster time series. Examples for both are provided below.
+Set of tools to apply the propabalistic approach of (Reiche et al., 2015, 2017) to combine multiple optical and Radar satellite time series and to detect deforestation. The package includes functions to apply the approach to both, single pixel time series and raster time series. Examples and test data are provided below.
 
 ### Research version
 The package includes the research version of the tools with a weaker perforamce at large areas. The reserach version allows (i) to visualise and analyse the entire time series history and (ii) it stepwise applies the probablistic approach consecutively on each observation in the time series to emulate a near real-time scenario. 
