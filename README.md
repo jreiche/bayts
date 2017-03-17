@@ -11,7 +11,7 @@ The basic version of the probablistic approach has been published in Reiche et a
 Figure 1 gives an schematic overview the probabilistic approach. We considered a near real-time scenario with past (t-1), current (t) and future observations (t+1), with multiple observations possible at the same observation date. First, once a new observation of either of the input time series was available (t = current) it was converted to the conditional NF probability (s<sup>NF</sup>) using the sensor specific forest (F) and non-forest (NF) probability density functions (pdf) (The sensor specific F and NF pdfs were derived using training data).
 The derived conditional NF probability was added to the combined time series of conditional NF probabilities derived from the previous LNDVIn, S1VVn and P2HVn time series observations (t–i). Second, we flagged a potential deforestation event in the case that the conditional NF probability was larger than 0.5. We calculated the probability of deforestation using iterative Bayesian updating. Future observation (t+i) were used to update the probability of deforestation in order to confirm or reject the flagged deforestation event.
 
-![fig](method_overview.jpg)
+![fig](/examples/method_overview.jpg)
 <sub>Figure 1. Probabilistic approach used to combine time series of Landsat NDVI (LNDVIn), Sentinel-1 VV (S1VVn) and ALOS-2 PALSAR-2 HV (P2HVn) observations and to detect deforestation in near real-time. (Reiche et al., under review) </sub>
 
 
@@ -28,7 +28,7 @@ Two examples are provided ...
 
 ### Example 1: Single-pixel example (Deforestation)
 
-Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016.
+Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016. (Source code: examples/bayts_pixel_example_v01.R)
 
 ```r
 require(bayts)
@@ -48,7 +48,7 @@ tlndvi <- bfastts(lndvi_obs,as.Date(lndvi_date),type=c("irregular"))
 plotts(tsL=list(tlndvi,ts1vv),labL=list("Sentinel-1 VV [dB]","Landsat NDVI"))
 plotts(tsL=list(tlndvi,ts1vv),labL=list("Sentinel-1 VV [dB]","Landsat NDVI"),ylimL=list(c(0,1),c(-13,-6)))
 ```
-![fig](example1_fig.JPG)<br />
+![fig](/examples/example1_fig1.JPG)<br />
 <sub>Figure 2. Landsat NDVI and Sentinel-1 VV time series covering a deforestation event in early 2016.</sub> 
 
 ```r
@@ -73,7 +73,7 @@ bts <- bayts(tsL=list(tlndvi,ts1vv),pdfL=list(lndvi_pdf,s1vv_pdf),chi=chi,start=
 plotBayts(bts$bayts,labL=list("Landsat NDVI","Sentinel-1 VV [dB]"),ylimL=list(c(0,1),c(-13,-6)),start=start)
 ```
 
-![fig](example1_fig2.JPG)<br />
+![fig](/examples/example1_fig2.JPG)<br />
 <sub> Figure 3. Landsat NDVI and Sentinel-1 VV time series and detected deforestation events. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event.</sub> 
 
 ```r
@@ -81,7 +81,7 @@ plotBayts(bts$bayts,labL=list("Landsat NDVI","Sentinel-1 VV [dB]"),ylimL=list(c(
 plotBaytsPNF(bts$bayts,start=start)
 ```
 
-![fig](example1_fig3.JPG)<br />
+![fig](/examples/example1_fig3.JPG)<br />
 <sub>Figure 4. Time series of NF probabilities derived from the two original time series. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event. </sub> 
 
 ```r
@@ -93,7 +93,7 @@ bts$change.confirmed  # time at which change is confirmed
 
 ### Example 2: Area example (Deforestation over dry forest)
 
-Include pictures
+Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al., 2017 (Source code: examples/bayts_raster_example_v01.R)
 
 ## References
 Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
