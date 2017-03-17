@@ -49,7 +49,11 @@ tlndvi <- bfastts(lndvi_obs,as.Date(lndvi_date),type=c("irregular"))
 # plot time series
 plotts(tsL=list(tlndvi,ts1vv),labL=list("Sentinel-1 VV [dB]","Landsat NDVI"))
 plotts(tsL=list(tlndvi,ts1vv),labL=list("Sentinel-1 VV [dB]","Landsat NDVI"),ylimL=list(c(0,1),c(-13,-6)))
+```
+![fig](example1_fig1.JPG)
+Landsat NDVI and Sentinel-1 VV time series covering a deforestation event in early 2016. 
 
+```r
 ######################################
 ######### apply bayts and plot results
 
