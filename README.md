@@ -159,7 +159,7 @@ lndviD_pdf <- c(c("gaussian","gaussian"),c(0,0.075),c(-0.5,0.125))
 # (1b) Theshold of deforestation probability at which flagged change is confirmed (chi)
 chi = 0.9
 # (1c) Start date of monitoring
-start = 2015.5
+start = 2016
 
 # (2) Apply baytsSpatial (it takes a long time; try parallel computing at next step)
 out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start)
