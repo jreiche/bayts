@@ -25,11 +25,6 @@ install_github('jreiche/bayts')
 
 Two examples are provided ...
 
-### Example data
-
-Example data, dry forest Bolivia, Reiche et al. (under review)
-Figure
-
 ### Example 1: Single-pixel example (Deforestation)
 
 Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016.
@@ -52,7 +47,7 @@ tlndvi <- bfastts(lndvi_obs,as.Date(lndvi_date),type=c("irregular"))
 plotts(tsL=list(tlndvi,ts1vv),labL=list("Sentinel-1 VV [dB]","Landsat NDVI"))
 plotts(tsL=list(tlndvi,ts1vv),labL=list("Sentinel-1 VV [dB]","Landsat NDVI"),ylimL=list(c(0,1),c(-13,-6)))
 ```
-![fig](example1_fig.JPG)
+![fig](example1_fig.JPG)<br />
 <sub>Figure 2. Landsat NDVI and Sentinel-1 VV time series covering a deforestation event in early 2016.</sub> 
 
 ```r
@@ -77,8 +72,7 @@ bts <- bayts(tsL=list(tlndvi,ts1vv),pdfL=list(lndvi_pdf,s1vv_pdf),chi=chi,start=
 plotBayts(bts$bayts,labL=list("Landsat NDVI","Sentinel-1 VV [dB]"),ylimL=list(c(0,1),c(-13,-6)),start=start)
 ```
 
-![fig](example1_fig2.JPG)
-
+![fig](example1_fig2.JPG)<br />
 <sub> Figure 3. Landsat NDVI and Sentinel-1 VV time series and detected deforestation events. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event.</sub> 
 
 ```r
@@ -89,8 +83,8 @@ plotBaytsPNF(bts$bayts,start=start)
 bts$change.flagged    # time at which change is flagged
 bts$change.confirmed  # time at which change is confirmed
 ```
-![fig](example1_fig3.JPG)
-Figure 4. Time series of NF probabilities derived from the two original time series. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event. 
+![fig](example1_fig3.JPG)<br />
+<sub>Figure 4. Time series of NF probabilities derived from the two original time series. black line = start of monitoring; dotted black line = flagged deforestation event that was not confirmed; red dotted line = flagged deforestation event; red line = confirmed deforestation event. </sub> 
 
 ### Example 2: Area example (Deforestation over dry forest)
 
