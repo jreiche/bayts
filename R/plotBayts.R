@@ -28,6 +28,7 @@ plotBayts <- function(bayts, labL=list(),ylimL=list(), colL=list(), xlim=NULL, s
     return(as.Date(sapply(x, conv.frac.yr), origin="1970-01-01") )
   }
   
+  
   # get output variables
   change.flagged = index(bayts[min(which(bayts$Flag=="Change"))])
   change.confirmed = index(bayts[max(which(bayts$Flag=="Change"))])
