@@ -1,13 +1,11 @@
 # bayts
 
-Propabalistic approach  (Reiche et al., 2015, 2017) to combine multiple satellite time series (e.g. optical and SAR) and change detection. The package includes functions to apply the approach to single pixel time series and to raster time series. Examples for both are provided below.
+Propabalistic approach (Reiche et al., 2015, 2017) to combine multiple optical and Radar satellite time series and to detect deforestation. The package includes functions to apply the approach to single pixel time series and to raster time series. Examples for both are provided below.
 
-## Probablistic approach to combine multiple time series and change detection
-The basic version of the approach has been published in Reiche et al., 2015. An improved version was published in Reiche et al. (under review). 
+## Probablistic approach 
+The basic version of the probablistic approach has been published in Reiche et al., (2015). An improved version was published in Reiche et al. (under review). In Reiche et al., 2017, the probabalistic approach was used for the multi-sensor combination of Radar and optical data from Sentinel-1 and PALSAR-2 HV, together with Landsat for near-real time forest change detection in tropical dry forests in Bolivia. A brief description of the approach is provided below:
 
-In Reiche et al., 2017, the probabalistic approach was used to combine Landsat NDVI, Sentinel-1 VV and ALSO-PALSAR HV time series for detecting deforestation in near real-time over a tropical dry forest site in Santa Cruz, Bolivia. A brief description is given below:
-
-Figure 1 gives an schematic overview the probabilistic approach. We considered a near real-time scenario with past (t-1), current (t) and future observations (t+1), with multiple observations possible at the same observation date. First, once a new observation of either of the input time series was available (t = current) it was converted to the conditional NF probability (sNF) using the sensor specific forest (F) and non-forest (NF) probability density functions (pdf) (The sensor specific F and NF pdfs were derived using training data).
+Figure 1 gives an schematic overview the probabilistic approach. We considered a near real-time scenario with past (t-1), current (t) and future observations (t+1), with multiple observations possible at the same observation date. First, once a new observation of either of the input time series was available (t = current) it was converted to the conditional NF probability (s<sup>NF</sup>) using the sensor specific forest (F) and non-forest (NF) probability density functions (pdf) (The sensor specific F and NF pdfs were derived using training data).
 The derived conditional NF probability was added to the combined time series of conditional NF probabilities derived from the previous LNDVIn, S1VVn and P2HVn time series observations (t–i). Second, we flagged a potential deforestation event in the case that the conditional NF probability was larger than 0.5. We calculated the probability of deforestation using iterative Bayesian updating. Future observation (t+i) were used to update the probability of deforestation in order to confirm or reject the flagged deforestation event.
 
 ![fig](method_overview.jpg)
