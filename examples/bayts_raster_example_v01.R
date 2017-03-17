@@ -1,5 +1,4 @@
 require(bayts)
-#require(bfastSpatial)
 
 ##############################################
 ######### load data, create & plot time series
@@ -45,102 +44,33 @@ plotts(tsL=list(tlndvi,tlndviD),labL=list("LNDVI","LNDVI_deseasonalised"))
 plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
 
 
-######################################
-######### apply bayts and plot results
+#############################################
+######### apply baytsSpatial and plot results
 
-# (0) subset length of Landsat NDVI time series to Sentinel-1 VV time series
-lndviD<- subset(lndviD, 241:291, drop=FALSE)
-lndvi_date <- lndvi_date[241:291]
-
+# (0) subset Landsat NDVI time series to length of Sentinel-1 VV time series (start in 2015)
+lndviD <- subset(lndviD, 251:291, drop=FALSE)
+lndvi_date <- lndvi_date[251:291]
 
 # (1) Define parameters 
 # (1a) Sensor specific pdfs of forest (F) and non-foerst (NF). Used to calculate the conditional NF probability of each observation. Gaussian distribution of F and NF distribution. Distributions are described using mean and sd.
 s1vvD_pdf <- c(c("gaussian","gaussian"),c(-1,0.75),c(-4,1))  
-lndviD_pdf <- c(c("gaussian","gaussian"),c(0,0.075),c(-0.5,0.125))
+lndviD_pdf <- c(c("gaussian","gaussian"),c(0,0.1),c(-0.5,0.125))
 
 # (1b) Theshold of deforestation probability at which flagged change is confirmed (chi)
 chi = 0.9
 # (1c) Start date of monitoring
-start = 2015.5
+start = 2016
 
-
-
-########## test baytsSpatial (does not work properly)
-out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores=1)
-fix(baytsSpatial)
-# apply baytsSpatial using multi-core application using mc.calc function from bfastSpatial package
-
-out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
-
-#plot results
+# (2) Apply baytsSpatial (it takes a long time; try parallel computing at next step)
+out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start)
+# plot confirmed changes
 plot(out,3)
 
-plotts(tsL=list(ts1vv))
+# (3) Apply baytsSpatial using parallel computing; using mc.calc function from bfastSpatial package 
+require(bfastSpatial)
+out2 <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
+# plot confirmed changes
+plot(out2,3)
 
 
-
-
-
-
-
-plotts(list(tlndvi,tlndviD),labL = list("LNDVI","LNDVI_deseasonalised"))
-plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
-
-plotts(list(ts1vvD,tlndviD),labL = list("S1VV_deseasonalised [dB]", "LNDVI_deseasonalised"))
-
-
-
-###################################
-# 1. Deseasonalize the raster brick
-#"Deseasonlized pixel value" = "original pixel value" - "percentile of the distribution of the raster"
-#deseasonalzie raster brick
-# deseasonlisation is requires as we deal with tropical dry forest
-s1vvD <- deseasonalizeRaster(s1vv,p=0.95)
-lndviD <- deseasonalizeRaster(lndvi,p=0.95)
-
-plot(s1vv,1)
-cell <- click(s1vv, n=1, cell=TRUE)[,1]
-cell <- 2561 # 2 out of 3 example
-
-tlndvi <- bfastts(as.vector(lndvi[cell]),lndvi_date,type=c("irregular"))
-tlndviD <- bfastts(as.vector(lndviD[cell]),lndvi_date,type=c("irregular"))
-ts1vv <- bfastts(as.vector(s1vv[cell]),s1vv_date,type=c("irregular"))
-ts1vvD <- bfastts(as.vector(s1vvD[cell]),s1vv_date,type=c("irregular"))
-plotts(list(tlndvi,tlndviD),labL = list("LNDVI","LNDVI_deseasonalised"))
-plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
-
-plotts(list(ts1vvD,tlndviD),labL = list("S1VV_deseasonalised [dB]", "LNDVI_deseasonalised"))
-
-
-########################
-# 1. Single pixel application
-
-
-
-########################
-# 2. Spatial application
-
-#Define pdfs to calculate conditional probability for F and NF
-#for S1 (PDF type, pdf values for forest (mean and sd), pdf values for non-forest (mean and sd))
-Spdf <- c(c("gaussian","gaussian"),c(-1,0.75),c(-4,1))
-#for Landsat NDVI
-Lpdf <- c(c("gaussian","gaussian"),c(0,0.075),c(-0.5,0.125))
-
-#Block weighting function to truncate non-forest probabilities. 
-#Important to avoid extrme probabilities
-bwf <- c(0.1,0.9)
-
-#Parameters for calc.PChange
-chi =0.9
-
-#apply baytsSpatial
-out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(Spdf,Lpdf),bwf=bwf,chi=chi,start=2016)
-
-#plot results
-plot(out,3)
-
-
-
-#writeRaster(out,filename=paste("/media/DATA2/reich006/GIS/Bayts_bol/bol_01",sep=""),format="GTiff",overwrite=TRUE)
-#writeRaster(raster(out,3),filename=paste("/media/DATA2/reich006/GIS/Bayts_bol/bol_01_Cconfirmed",sep=""),format="GTiff",overwrite=TRUE)
 
