@@ -90,6 +90,7 @@ plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, p
       }
       
       # plot ts
+      options(warn=-1)
       p <- plot(zts,xlim=range(xlim),axes=F, ylim=ylim, xlab="", ylab="",type="l",col=col,bty="n")
       box(lwd=0.5) 
       if(points==TRUE) {p <- p + points(zts,xlim=range(xlim),ylim=ylim, pch = 19,cex=0.5,col=col)}
@@ -102,6 +103,7 @@ plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, p
         p <- axis(4, ylim=ylim,col=col,lwd=1,col.axis=col,line=(0.5+((i-2)*4)))
         mtext(4,text=lab,line=(2.5+((i-2)*4)),col=col)
       }
+      options(warn=0)
     }
   }
 }
