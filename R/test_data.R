@@ -20,7 +20,6 @@
 #' plotts(tsL=list(tsL,tsS),labL=list("Landsat NDVI","Sentinel-1 VV [dB]"))
 #' plotts(tsL=list(tsL,tsS),labL=list("Landsat NDVI","Sentinel-1 VV [dB]"),ylimL=list(c(0,1),c(-13,-6)))
 
-
 #' @title Sentinel-1 VV and Landsat NDVI raster brick test data
 #' 
 #' @description Sentinel-1 VV and Landsat NDVI time series raster brick; 09/2014 - 05/2016. 
@@ -38,4 +37,3 @@
 #' data(s1vv_lndvi_raster)
 #' 
 #' plot(s1vv,1)
-#' 
