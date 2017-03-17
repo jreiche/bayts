@@ -1,4 +1,5 @@
 require(bayts)
+require(bfastSpatial)
 
 ##############################################
 ######### load data, create & plot time series
@@ -47,6 +48,11 @@ plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
 ######################################
 ######### apply bayts and plot results
 
+# (0) subset length of Landsat NDVI time series to Sentinel-1 VV time series
+lndviD<- subset(lndviD, 241:291, drop=FALSE)
+lndvi_date <- lndvi_date[241:291]
+
+
 # (1) Define parameters 
 # (1a) Sensor specific pdfs of forest (F) and non-foerst (NF). Used to calculate the conditional NF probability of each observation. Gaussian distribution of F and NF distribution. Distributions are described using mean and sd.
 s1vvD_pdf <- c(c("gaussian","gaussian"),c(-1,0.75),c(-4,1))  
@@ -57,16 +63,13 @@ chi = 0.9
 # (1c) Start date of monitoring
 start = 2015.5
 
-#apply baytsSpatial
-lndviD<- subset(lndviD, 251:291, drop=FALSE)
-lndvi_date <- lndvi_date[251:291]
 
-lndvi_date
+
 ########## test baytsSpatial (does not work properly)
 out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start)
 
 # apply baytsSpatial using multi-core application using mc.calc function from bfastSpatial package
-require(bfastSpatial)
+
 out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
 
 #plot results
