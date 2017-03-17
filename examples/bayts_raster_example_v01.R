@@ -1,5 +1,5 @@
 require(bayts)
-require(bfastSpatial)
+#require(bfastSpatial)
 
 ##############################################
 ######### load data, create & plot time series
@@ -66,8 +66,8 @@ start = 2015.5
 
 
 ########## test baytsSpatial (does not work properly)
-out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start)
-
+out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores=1)
+fix(baytsSpatial)
 # apply baytsSpatial using multi-core application using mc.calc function from bfastSpatial package
 
 out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
