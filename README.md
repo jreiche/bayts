@@ -28,7 +28,7 @@ Two examples are provided ...
 
 ### Example 1: Single-pixel example (Deforestation)
 
-Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016.
+Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016. (Source code: examples/bayts_pixel_example_v01.R)
 
 ```r
 require(bayts)
@@ -93,7 +93,7 @@ bts$change.confirmed  # time at which change is confirmed
 
 ### Example 2: Area example (Deforestation over dry forest)
 
-Include pictures
+Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al., 2017 (Source code: examples/bayts_raster_example_v01.R)
 
 ## References
 Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
