@@ -116,7 +116,7 @@ plot(s1vv,85)   # deforestation in the top right part is visible
 plot(lndvi,290) # deforestation in the top right part is visible
 ```
 
-The original time series are spatially normalised to reduce dry froest seasonality. The method is described in Reiche et al., (under review) and is based on the spatial normalisation method published in Hamunyela et al. (2016).
+Next, the original raster time series are spatially normalised to reduce dry froest seasonality. The spatial normalisation is done image wise. The method is described in Reiche et al., (under review) and is based on the spatial normalisation method published in Hamunyela et al. (2016).
 
 ```r
 ###################################################################################
@@ -144,7 +144,12 @@ ts1vvD <- bfastts(as.vector(s1vvD[cell]),s1vv_date,type=c("irregular"))    # des
 plotts(tsL=list(tlndvi,tlndviD),labL=list("LNDVI","LNDVI_deseasonalised"))
 # weaker dry forest seasonality in the Sentinel-1 VV time series
 plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
+```
 
+![fig](/examples/example2_fig1.JPG)<br />
+<sub>Figure 5. Original (black) and spatialy normalised Landsat NDVI time series. </sub> 
+
+```r
 
 #############################################
 ######### apply baytsSpatial and plot results
