@@ -130,6 +130,13 @@ lndviD <- deseasonalizeRaster(lndvi,p=0.95)
 ######### plot original and deseasonalised time series
 
 plot(s1vv,85)
+
+```
+
+![fig](/examples/example2_fig2.JPG)<br />
+<sub>Figure 5. Sentinel-1 VV image aquired at 17-05-2016. The top right part of the images shows the deforested areas. </sub> 
+
+```r
 cell <- click(s1vv, n=1, cell=TRUE)[,1]
 #cell <- 3974
 
@@ -147,7 +154,7 @@ plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
 ```
 
 ![fig](/examples/example2_fig1.JPG)<br />
-<sub>Figure 5. Original (black) and spatialy normalised Landsat NDVI time series. </sub> 
+<sub>Figure 6. Original (black) and spatialy normalised (blue) Landsat NDVI time series. </sub> 
 
 ```r
 
@@ -179,6 +186,11 @@ out2 <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pd
 # plot confirmed changes
 plot(out2,3)
 ```
+
+![fig](/examples/example2_fig3.JPG)<br />
+<sub>Figure 7. Detected deforestation. </sub> 
+
+```r
 
 ## References
 Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
