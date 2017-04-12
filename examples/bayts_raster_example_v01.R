@@ -29,7 +29,7 @@ lndviD <- deseasonalizeRaster(lndvi,p=0.95)
 
 plot(s1vv,85)
 cell <- click(s1vv, n=1, cell=TRUE)[,1]
-#cell <- 3974
+#cell <- 4264
 
 # create time series using bfastts (bfast package)
 tlndvi <- bfastts(as.vector(lndvi[cell]),lndvi_date,type=c("irregular"))   # original Landsat NDVI
