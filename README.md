@@ -196,7 +196,18 @@ Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (under revie
 
 Hamunyela, E., Verbesselt, J., & Herold, M. (2016). Using spatial context to improve early detection of deforestation from Landsat time series. Remote Sensing of Environment, 172, 126–138. http://doi.org/10.1016/j.rse.2015.11.006
 
-## License
+## Citation
+
+```r
+@software{bayts,
+  author = {Reiche, Johannes},
+  title = {{bayts}},
+  url = {https://github.com/jreiche/bayts},
+  version = {1.0},
+  date = {2017-04-12},
+  doi = {10.5281/zenodo.545792}
+}
+```
 
 ## For external contributors
 
