@@ -24,7 +24,7 @@ install_github('jreiche/bayts')
 ```
 ## Examples 
 
-Two examples are provided ...
+Two examples are provided. Example 1 shows how to apply the functions on singel-pixel time series (Sentinel-1 VV and Landsat NDVI). Example 2 shows how to apply the functions to raster time series.
 
 ### Example 1: Single-pixel example (Deforestation)
 
@@ -93,9 +93,7 @@ bts$change.confirmed  # time at which change is confirmed
 
 ### Example 2: Area example (Deforestation over dry forest)
 
-Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al., 2017 (Source code: examples/bayts_raster_example_v01.R)
-
-ADD INFO on deseasonalisation ...
+Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al. (under review) (Source code: examples/bayts_raster_example_v01.R)
 
 ```r
 require(bayts)
@@ -116,7 +114,11 @@ s1vv_date
 plot(s1vv,3)    # all areas are covered with forest
 plot(s1vv,85)   # deforestation in the top right part is visible
 plot(lndvi,290) # deforestation in the top right part is visible
+```
 
+The original time series are spatially normalised to reduce dry froest seasonality. The method is described in Reiche et al., (under review) and is based on the spatial normalisation method published in Hamunyela et al. (2016).
+
+```r
 ###################################################################################
 ######### Spatial normalisation to reduce dry forest seasonality in the time series
 
@@ -177,6 +179,8 @@ plot(out2,3)
 Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
 
 Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (under review): Improving near-real time deforestation monitoring in tropical dry forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2. Remote Sensing of Environment. 
+
+Hamunyela, E., Verbesselt, J., & Herold, M. (2016). Using spatial context to improve early detection of deforestation from Landsat time series. Remote Sensing of Environment, 172, 126–138. http://doi.org/10.1016/j.rse.2015.11.006
 
 ## License
 
