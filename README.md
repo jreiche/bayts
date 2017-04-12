@@ -22,11 +22,37 @@ The package can be installed directly from github using devtools
 library(devtools)
 install_github('jreiche/bayts')
 ```
-## Examples 
+
+## References
+Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
+
+Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (under review): Improving near-real time deforestation monitoring in tropical dry forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2. Remote Sensing of Environment. 
+
+Hamunyela, E., Verbesselt, J., & Herold, M. (2016). Using spatial context to improve early detection of deforestation from Landsat time series. Remote Sensing of Environment, 172, 126–138. http://doi.org/10.1016/j.rse.2015.11.006
+
+## Citation
+
+```r
+@software{bayts,
+  author = {Reiche, Johannes},
+  title = {{bayts}},
+  url = {https://github.com/jreiche/bayts},
+  version = {1.0},
+  date = {2017-04-12},
+  doi = {10.5281/zenodo.545792}
+}
+```
+
+## For external contributors
+
+External contributions are welcome. If you would like to contribute additional features and improvements to the package; fork the repository on gitHub, commit your changes and make a pull request. Always use the develop branch as a starting point for your work. Your contribution will be reviewed for quality, relevance and consistency with the rest of the package before being merged.
+
+
+# Examples 
 
 Two examples are provided. Example 1 shows how to apply the functions on singel-pixel time series (Sentinel-1 VV and Landsat NDVI). Example 2 shows how to apply the functions to raster time series.
 
-### Example 1: Single-pixel example (Deforestation)
+## Example 1: Single-pixel example (Deforestation)
 
 Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016. (Source code: examples/bayts_pixel_example_v01.R)
 
@@ -91,7 +117,7 @@ bts$change.confirmed  # time at which change is confirmed
 ```
 
 
-### Example 2: Area example (Deforestation over dry forest)
+## Example 2: Area example (Deforestation over dry forest)
 
 Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al. (under review) (Source code: examples/bayts_raster_example_v01.R)
 
@@ -186,29 +212,3 @@ plot(out2,3)
 ```
 ![fig](/examples/example2_fig2.JPG)<br />
 <sub>Figure 7. Detected deforestation. </sub> 
-
-
-
-## References
-Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
-
-Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (under review): Improving near-real time deforestation monitoring in tropical dry forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2. Remote Sensing of Environment. 
-
-Hamunyela, E., Verbesselt, J., & Herold, M. (2016). Using spatial context to improve early detection of deforestation from Landsat time series. Remote Sensing of Environment, 172, 126–138. http://doi.org/10.1016/j.rse.2015.11.006
-
-## Citation
-
-```r
-@software{bayts,
-  author = {Reiche, Johannes},
-  title = {{bayts}},
-  url = {https://github.com/jreiche/bayts},
-  version = {1.0},
-  date = {2017-04-12},
-  doi = {10.5281/zenodo.545792}
-}
-```
-
-## For external contributors
-
-External contributions are welcome. If you would like to contribute additional features and improvements to the package; fork the repository on gitHub, commit your changes and make a pull request. Always use the develop branch as a starting point for your work. Your contribution will be reviewed for quality, relevance and consistency with the rest of the package before being merged.
