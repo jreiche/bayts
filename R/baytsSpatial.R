@@ -7,7 +7,7 @@
 
 #' @author Johannes Reiche (Wageningen University)
 
-#' @param bL list of raster bricks
+#' @param bL list of raster bricks. Raster bricks need to have the same extent and spatial resolution.
 #' @param datesL list of time vector of the format: "2014-10-07". 
 #' @param pdfL list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}). 
 #' "pdf" object: pdf[1] = pdf type F, pdf[2] = pdf type NF, pdf[3] and pdf[4] = pdf parameter describing F, pdf[5] and pdf[6] = pdf parameter describing NF. pdf types supported: Gaussian or Weibull.
