@@ -50,7 +50,7 @@ calcPNF <- function (ts, pdf, bwf = c(0, 1))
         if (pdf[1] == "weibull") {PF <- dweibull(x, as.double(pdf[3]), as.double(pdf[4]))}
         if (pdf[2] == "weibull") {PNF <- dweibull(x, as.double(pdf[5]), as.double(pdf[6]))}
         #2 calculate conditinal NF
-        if (PNF < 1/1000) {PNF <- 0} else {PNF <- PNF/(PF + PNF)}
+        if (PNF < 1e-1000) {PNF <- 0} else {PNF <- PNF/(PF + PNF)}
         #3 apply block weighting function 
         if (PNF < bwf[1]) {PNF <- bwf[1]}
         if (PNF > bwf[2]) {PNF <- bwf[2]}
