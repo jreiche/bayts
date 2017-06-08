@@ -10,6 +10,7 @@
 
 #' @param bayts "bayts" time series data frame created with \code{\link{createBayts}}
 #' @param chi Threshold of Pchange at which the change is confirmed; Default=0.5
+#' @param PNFmin threshold of pNF above which the first observation is flagged; Default=0.5
 #' @param start Start date of monitoring period. Default=NULL (start of "bayts" time series data frame).
 #' @param end End date of monitoring period. Default=NULL (end of "bayts" time series data frame)
 
@@ -22,8 +23,7 @@
 #' @export 
 
 
-detectBayts <- function (bayts, chi = 0.5,
-                         start = NULL, end = NULL) 
+detectBayts <- function (bayts, chi = 0.5, PNFmin = 0.5, start = NULL, end = NULL) 
 {
   
   ################################
@@ -64,7 +64,7 @@ detectBayts <- function (bayts, chi = 0.5,
       # (case 1) No confirmed or flagged change: 
       if (bayts$Flag[(t - 1)] == "0" || bayts$Flag[(t - 1)] == "oldFlag") {
         #If PNF < 0.5 flag change and calcuate PChange using current and preveous PNF; otherwise continue
-        if (bayts$PNF[t] >= 0.5) {
+        if (bayts$PNF[t] >= PNFmin) {
           i <- 0
           prior <- as.double(bayts$PNF[t - 1])
           likelihood <- as.double(bayts$PNF[t])

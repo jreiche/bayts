@@ -61,7 +61,7 @@ chi = 0.9
 # (1c) Start date of monitoring
 start = 2016
 
-# (2) Apply baytsSpatial (it takes a long time; try parallel computing at next step)
+# (2) Apply baytsSpatial (it may takes up to 5 minutes; try parallel computing at next step)
 out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start)
 # plot confirmed changes
 plot(out,3)
@@ -71,6 +71,3 @@ require(bfastSpatial)
 out2 <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
 # plot confirmed changes
 plot(out2,3)
-
-
-

@@ -15,6 +15,7 @@
 #' "pdf" object: pdf[1] = pdf type F, pdf[2] = pdf type NF, pdf[3] and pdf[4] = pdf parameter describing F, pdf[5] and pdf[6] = pdf parameter describing NF. pdf types supported: Gaussian or Weibull.
 #' @param bwf block weighting function to truncate the NF probability (default = c(0,1) = no truncation) 
 #' @param chi Threshold of Pchange at which the change is confirmed; Default=0.5
+#' @param PNFmin threshold of pNF above which the first observation is flagged; Default=0.5
 #' @param start Start date of monitoring period. Default=NULL (start of input time series).
 #' @param end End date of monitoring period. Default=NULL (end of input time series)
 
@@ -35,11 +36,11 @@
 #' @export 
 
 
-bayts <- function(tsL=list(NULL,...), pdfL=list(NULL,...), bwf = c(0.1, 0.9), chi=0.5, start=NULL, end=NULL){
+bayts <- function(tsL=list(NULL,...), pdfL=list(NULL,...), bwf=c(0, 1), chi=0.9, PNFmin=0.5, start=NULL, end=NULL){
   
-  bayts <- createBayts(tsL=tsL,pdfL=pdfL,bwf=bwf)
+  bayts <- createBayts(tsL=tsL, pdfL=pdfL, bwf=bwf)
 
-  bayts <- detectBayts(bayts,chi=chi,start=start,end=end)
+  bayts <- detectBayts(bayts, chi=chi, PNFmin=PNFmin, start=start, end=end)
   
   #create output list
   baytsL <- list(

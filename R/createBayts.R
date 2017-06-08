@@ -12,7 +12,7 @@
 #' @param tsL list of object(s) of class \code{\link{ts}}
 #' @param pdfL list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}). 
 #' "pdf" object: pdf[1] = pdf type F, pdf[2] = pdf type NF, pdf[3] and pdf[4] = pdf parameter describing F, pdf[5] and pdf[6] = pdf parameter describing NF. pdf types supported: Gaussian or Weibull.
-#' @param bwf block weighting function to truncate the NF probability (default = c(0,1) = no truncation) 
+#' @param bwf block weighting function to truncate the NF probability; Default=c(0.1,0.9); (c(0,1) = no truncation) 
 
 #' @return "bayts" time seris data frame including: time series observation (ts1, ts2 ...), conditional non-forest probabilties (PNF), empty Flag (Flag) and empty Change probability (PChange). 
 
