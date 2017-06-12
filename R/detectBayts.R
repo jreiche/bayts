@@ -24,7 +24,11 @@
 
 detectBayts <- function (bayts, chi = 0.5, PNFmin = 0.5, start = NULL, end = NULL) 
 {
-  if(length(which(bayts$PNF>PNFmin))>0){
+  #check for observations in the monitoring period with PNF >= PNFmin
+  ind <- which(bayts$PNF >= PNFmin)
+  ind <- ind[which(ind >= min(which(index(bayts) >= start)))]
+  
+  if (length(ind) > 0) {
     ################################
     # step 1: set start and end date
     if (is.null(start)) {st <- 1} else {st <- min(which(index(bayts) > start))}
@@ -45,9 +49,6 @@ detectBayts <- function (bayts, chi = 0.5, PNFmin = 0.5, start = NULL, end = NUL
     ####################
     # step 2: Monitoring
     if (en >= st) {
-      # select start of monitoring for which PNF >= PNFmin
-      ind <- which(bayts$PNF>=PNFmin)
-      ind <- ind[which(ind>=min(which(index(bayts)>=start)))]
       bayts$Flag[which(bayts$PNF<PNFmin)]<-0
       for (r in 1:length(ind)){
         for (t in ind[r]:en) {
