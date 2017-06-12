@@ -22,86 +22,75 @@
 
 #' @export 
 
-
 detectBayts <- function (bayts, chi = 0.5, PNFmin = 0.5, start = NULL, end = NULL) 
 {
-  
-  ################################
-  # step 1: set start and end date
-  if (is.null(start)) {
-    st <- 1
-  }
-  else {
-    st <- min(which(index(bayts) > start))
-  }
-  if (is.null(end)) {
-    en <- length(index(bayts))
-  }
-  else {
-    en <- max(which(index(bayts) < end))
-  }
-  # in case of start is beginning of "bayts" time series, a zero element is added
-  if (st == 1) {
-    bayts_zero <- bayts[1]
-    index(bayts_zero) <- index(bayts_zero) - 0.1
-    bayts_zero$PNF <- 0.5
-    bayts <- rbind(bayts_zero, bayts)
-    st <- st + 1
-    en <- en + 1
-    bayts$Flag[(st - 1)] <- "0"
-  }
-  else {
-    bayts$Flag[(st - 1)] <- "0"
-  }
-  
-  ####################
-  # step 2: Monitoring
-  if (en >= st) {
-    for (t in st:en) {
-      
-      #############################################################
-      # step 2.1: Update Flag and PChange for current time step (t)
-      # (case 1) No confirmed or flagged change: 
-      if (bayts$Flag[(t - 1)] == "0" || bayts$Flag[(t - 1)] == "oldFlag") {
-        #If PNF < 0.5 flag change and calcuate PChange using current and preveous PNF; otherwise continue
-        if (bayts$PNF[t] >= PNFmin) {
-          i <- 0
-          prior <- as.double(bayts$PNF[t - 1])
-          likelihood <- as.double(bayts$PNF[t])
-          postieror <- (prior * likelihood)/((prior * likelihood) + ((1 - prior) * (1 - likelihood)))
-          bayts$Flag[t] <- "Flag"
-          bayts$PChange[t] <- postieror
-        } else {
-          bayts$Flag[t] <- "0"
-          next #go to next time step
-        }
-      }
-      # (case 2) Flagged change at preveous time step: update PChange
-      if (bayts$Flag[(t - 1)] == "Flag") {
-        prior <- as.double(bayts$PChange[t - 1])
-        likelihood <- as.double(bayts$PNF[t])
-        postieror <- (prior * likelihood)/((prior * likelihood) + ((1 - prior) * (1 - likelihood)))
-        bayts$PChange[t] <- postieror
-        bayts$Flag[t] <- "Flag"
-        i <- i + 1
-      }
-      
-      ###############################################
-      # step 2.2: Confirm and reject flagged changes
-      if (bayts$Flag[(t)] == "Flag") {
-        # reject changes if PChange < 0.5 for 2nd future observation
-        if ((i > 0)) {
-          if ((as.double(bayts$PChange[t])) < 0.5) {
-            bayts$Flag[(t - i):t] <- 0
-            bayts$Flag[(t - i)] <- "oldFlag"
-            next #go to next time step
+  if(length(which(bayts$PNF>PNFmin))>0){
+    ################################
+    # step 1: set start and end date
+    if (is.null(start)) {st <- 1} else {st <- min(which(index(bayts) > start))}
+    if (is.null(end)) {en <- length(index(bayts))} else {en <- max(which(index(bayts) < end))}
+    # in case of start is beginning of "bayts" time series, a zero element is added
+    if (st == 1) {
+      bayts_zero <- bayts[1]
+      index(bayts_zero) <- index(bayts_zero) - 0.1
+      bayts_zero$PNF <- 0.5
+      bayts <- rbind(bayts_zero, bayts)
+      st <- st + 1
+      en <- en + 1
+      bayts$Flag[(st - 1)] <- "0"
+    } else {
+      bayts$Flag[(st - 1)] <- "0"
+    }
+    
+    ####################
+    # step 2: Monitoring
+    if (en >= st) {
+      # select start of monitoring for which PNF >= PNFmin
+      ind <- which(bayts$PNF>=PNFmin)
+      ind <- ind[which(ind>=min(which(index(bayts)>=start)))]
+      bayts$Flag[which(bayts$PNF<PNFmin)]<-0
+      for (r in 1:length(ind)){
+        for (t in ind[r]:en) {
+          #############################################################
+          # step 2.1: Update Flag and PChange for current time step (t)
+          # (case 1) No confirmed or flagged change: 
+          if (bayts$Flag[(t - 1)] == "0" || bayts$Flag[(t - 
+                                                        1)] == "oldFlag") {
+            i <- 0
+            prior <- as.double(bayts$PNF[t - 1])
+            likelihood <- as.double(bayts$PNF[t])
+            postieror <- (prior * likelihood)/((prior * 
+                                                  likelihood) + ((1 - prior) * (1 - likelihood)))
+            bayts$Flag[t] <- "Flag"
+            bayts$PChange[t] <- postieror
           }
-        }
-        # confirm change in case PChange >= chi
-        if ((as.double(bayts$PChange[t])) >= chi) {
-          if ((as.double(bayts$PNF[t])) >= 0.5) {
-            bayts$Flag[min(which(bayts$Flag == "Flag")):t] <- "Change"
-            return(bayts) 
+          # (case 2) Flagged change at preveous time step: update PChange
+          if (bayts$Flag[(t - 1)] == "Flag") {
+            prior <- as.double(bayts$PChange[t - 1])
+            likelihood <- as.double(bayts$PNF[t])
+            postieror <- (prior * likelihood)/((prior * likelihood) + 
+                                                 ((1 - prior) * (1 - likelihood)))
+            bayts$PChange[t] <- postieror
+            bayts$Flag[t] <- "Flag"
+            i <- i + 1
+          }
+          ###############################################
+          # step 2.2: Confirm and reject flagged changes
+          if (bayts$Flag[(t)] == "Flag") {
+            if ((i > 0)) {
+              if ((as.double(bayts$PChange[t])) < 0.5) {
+                bayts$Flag[(t - i):t] <- 0
+                bayts$Flag[(t - i)] <- "oldFlag"
+                break 
+              }
+            }
+            # confirm change in case PChange >= chi
+            if ((as.double(bayts$PChange[t])) >= chi) {
+              if ((as.double(bayts$PNF[t])) >= 0.5) {
+                bayts$Flag[min(which(bayts$Flag == "Flag")):t] <- "Change"
+                return(bayts)
+              }
+            }
           }
         }
       }
@@ -109,5 +98,3 @@ detectBayts <- function (bayts, chi = 0.5, PNFmin = 0.5, start = NULL, end = NUL
   }
   return(bayts)
 }
-
-
