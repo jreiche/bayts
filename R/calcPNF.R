@@ -33,30 +33,20 @@
 
 calcPNF <- function (ts, pdf, bwf = c(0, 1)) 
 {
-  #initiate time series of normalised F probabilities
-  PNFts <- ts
-  
-  #calculate conditional NF probability for each time series observation
   if (length(ts) > 0) {
-    for (i in 1:length(index(ts))) {
-      #x = observation at i
-      x <- ts[i]
-      if (!is.na(x)) {
-        #1 calc F and NF probabilities from pdfributions
-        #Gaussian pdfribusion (mean and sd)
-        if (pdf[1] == "gaussian") {PF <- dnorm(x, as.double(pdf[3]), as.double(pdf[4]))}
-        if (pdf[2] == "gaussian") {PNF <- dnorm(x, as.double(pdf[5]), as.double(pdf[6]))}
-        #Weibull pdfribusion (shape and scale) 
-        if (pdf[1] == "weibull") {PF <- dweibull(x, as.double(pdf[3]), as.double(pdf[4]))}
-        if (pdf[2] == "weibull") {PNF <- dweibull(x, as.double(pdf[5]), as.double(pdf[6]))}
-        #2 calculate conditinal NF
-        if (PNF < 1e-1000) {PNF <- 0} else {PNF <- PNF/(PF + PNF)}
-        #3 apply block weighting function 
-        if (PNF < bwf[1]) {PNF <- bwf[1]}
-        if (PNF > bwf[2]) {PNF <- bwf[2]}
-        PNFts[i] <- PNF
-      }
-    }
+    #Gaussian pdfribusion (mean and sd)
+    if (pdf[1] == "gaussian") {PF <- dnorm(ts, as.double(pdf[3]), as.double(pdf[4]))}
+    if (pdf[2] == "gaussian") {PNF <- dnorm(ts, as.double(pdf[5]), as.double(pdf[6]))}
+    #Weibull pdfribusion (shape and scale) 
+    if (pdf[1] == "weibull") {PF <- dweibull(ts, as.double(pdf[3]), as.double(pdf[4]))}
+    if (pdf[2] == "weibull") {PNF <- dweibull(ts, as.double(pdf[5]), as.double(pdf[6]))}
+    
+    #calculate conditinal NF
+    PNF[PNF<1e-10000] <- 0
+    PNF[PNF>0] <- (PNF[PNF>0]/(PF[PNF>0] + PNF[PNF>0]))
+    ## apply block weighting function 
+    PNF[PNF<bwf[1]]<-bwf[1]
+    PNF[PNF>bwf[2]]<-bwf[2]
   }
-  return(PNFts)
+  return(PNF)
 }
