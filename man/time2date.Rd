@@ -9,7 +9,7 @@ time2date(time, format = "\%Y-\%m-\%d")
 \arguments{
 \item{time}{time}
 
-\item{format}{date format; default="%Y-%m-%d". DOY = "%Y.%j"}
+\item{format}{date format; default="\%Y-\%m-\%d". DOY = "\%Y.\%j"}
 }
 \value{
 single value, vector or time series object of class "ts"

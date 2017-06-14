@@ -7,7 +7,7 @@
 
 #' @param time time
 
-#' @param format date format; default="%Y-%m-%d". DOY = "%Y.%j" 
+#' @param format date format; default="\%Y-\%m-\%d". DOY = "\%Y.\%j" 
 
 #' @return single value, vector or time series object of class "ts"
 
