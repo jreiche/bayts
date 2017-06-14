@@ -15,20 +15,6 @@
 
 plotBayts <- function(bayts, labL=list(),ylimL=list(), colL=list(), xlim=NULL, start=NULL){
 
-  # function that converts ts to Date and considering leap years
-  ts_to_Date_leapyears <- function(x) {
-    # if leapyear add 1 day
-    yu<-function(yr){
-      u <- 0
-      if(yr %% 4 == 0) {u <- 1}
-      return(u)
-    }
-    # convert time series to date
-    conv.frac.yr <- function(yr) as.Date((yr-1970)*(365 + yu(yr)) + round((yr-1970)/4) , origin="1970-01-01" ) 
-    return(as.Date(sapply(x, conv.frac.yr), origin="1970-01-01") )
-  }
-  
-  
   # get output variables
   change.flagged = index(bayts[min(which(bayts$Flag=="Change"))])
   change.confirmed = index(bayts[max(which(bayts$Flag=="Change"))])
@@ -39,18 +25,18 @@ plotBayts <- function(bayts, labL=list(),ylimL=list(), colL=list(), xlim=NULL, s
   
     
   # create bfastts for individual ts and create list of bfastts for a maximum of 10 ts
-  index(bayts)[which(as.character(duplicated(as.character(ts_to_Date_leapyears(index(bayts$ts1)))))==TRUE)]<-index(bayts)[which(as.character(duplicated(as.character(ts_to_Date_leapyears(index(bayts$ts1)))))==TRUE)]+0.001   # increase by 1 day in case of duplicated dates
-  ts1 <- bfastts(as.double(bayts$ts1),ts_to_Date_leapyears(index(bayts$ts1)),type="irregular")
+  index(bayts)[which(as.character(duplicated(as.character(time2date(index(bayts$ts1)))))==TRUE)]<-index(bayts)[which(as.character(duplicated(as.character(time2date(index(bayts$ts1)))))==TRUE)]+0.001   # increase by 1 day in case of duplicated dates
+  ts1 <- bfastts(as.double(bayts$ts1),time2date(index(bayts$ts1)),type="irregular")
   tsL <- list(ts1)
-  if (ncol(bayts)>4){tsL <- list(tsL[[1]],bfastts(as.double(bayts$ts2),ts_to_Date_leapyears(index(bayts$ts2)),type="irregular"))} 
-  if (ncol(bayts)>5){tsL <- list(tsL[[1]],tsL[[2]],bfastts(as.double(bayts$ts3),ts_to_Date_leapyears(index(bayts$ts3)),type="irregular"))} 
-  if (ncol(bayts)>6){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],bfastts(as.double(bayts$ts4),ts_to_Date_leapyears(index(bayts$ts4)),type="irregular"))} 
-  if (ncol(bayts)>7){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],bfastts(as.double(bayts$ts5),ts_to_Date_leapyears(index(bayts$ts5)),type="irregular"))} 
-  if (ncol(bayts)>8){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],bfastts(as.double(bayts$ts6),ts_to_Date_leapyears(index(bayts$ts6)),type="irregular"))} 
-  if (ncol(bayts)>9){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],bfastts(as.double(bayts$ts7),ts_to_Date_leapyears(index(bayts$ts7)),type="irregular"))} 
-  if (ncol(bayts)>10){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],tsL[[7]],bfastts(as.double(bayts$ts8),ts_to_Date_leapyears(index(bayts$ts8)),type="irregular"))} 
-  if (ncol(bayts)>11){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],tsL[[7]],tsL[[8]],bfastts(as.double(bayts$ts9),ts_to_Date_leapyears(index(bayts$ts9)),type="irregular"))} 
-  if (ncol(bayts)>12){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],tsL[[7]],tsL[[8]],tsL[[9]],bfastts(as.double(bayts$ts10),ts_to_Date_leapyears(index(bayts$ts10)),type="irregular"))} 
+  if (ncol(bayts)>4){tsL <- list(tsL[[1]],bfastts(as.double(bayts$ts2),time2date(index(bayts$ts2)),type="irregular"))} 
+  if (ncol(bayts)>5){tsL <- list(tsL[[1]],tsL[[2]],bfastts(as.double(bayts$ts3),time2date(index(bayts$ts3)),type="irregular"))} 
+  if (ncol(bayts)>6){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],bfastts(as.double(bayts$ts4),time2date(index(bayts$ts4)),type="irregular"))} 
+  if (ncol(bayts)>7){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],bfastts(as.double(bayts$ts5),time2date(index(bayts$ts5)),type="irregular"))} 
+  if (ncol(bayts)>8){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],bfastts(as.double(bayts$ts6),time2date(index(bayts$ts6)),type="irregular"))} 
+  if (ncol(bayts)>9){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],bfastts(as.double(bayts$ts7),time2date(index(bayts$ts7)),type="irregular"))} 
+  if (ncol(bayts)>10){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],tsL[[7]],bfastts(as.double(bayts$ts8),time2date(index(bayts$ts8)),type="irregular"))} 
+  if (ncol(bayts)>11){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],tsL[[7]],tsL[[8]],bfastts(as.double(bayts$ts9),time2date(index(bayts$ts9)),type="irregular"))} 
+  if (ncol(bayts)>12){tsL <- list(tsL[[1]],tsL[[2]],tsL[[3]],tsL[[4]],tsL[[5]],tsL[[6]],tsL[[7]],tsL[[8]],tsL[[9]],bfastts(as.double(bayts$ts10),time2date(index(bayts$ts10)),type="irregular"))} 
   
   # plot multiple ts
   plotts(tsL=tsL,labL=labL,ylimL=ylimL,colL=colL,xlim=xlim)
@@ -60,16 +46,16 @@ plotBayts <- function(bayts, labL=list(),ylimL=list(), colL=list(), xlim=NULL, s
     if(!is.null(start)){abline(v=start,col='black',add=TRUE)}
     abline(v=flag,col='red',add=TRUE,lty='dashed')
     abline(v=oldflag,col='black',add=TRUE,lty='dashed') 
-    title(paste(round(max(index(bayts)),digits=3)," (Tflagged=", round(min(index(vflag)),digits=3),")",sep=""),cex.main=1.05)
+    title(paste(time2date(max(index(bayts)),format = "%Y.%j"), " (Tflagged=",time2date(min(index(vflag)),format = "%Y.%j"), ")  [DOY]", sep = ""), cex.main = 1.05)
   } else if(!is.na(change.confirmed)==TRUE){
     if(!is.null(start)){abline(v=start,col='black',add=TRUE)}
     abline(v=change.flagged,col='red',lty='dashed')
     abline(v=change.confirmed,col='red')
     abline(v=oldflag,col='black',add=TRUE,lty='dashed')
-    title(paste(round(max(index(bayts)),digits=3)," (T=",round(change.confirmed,digits=3)," | Tflagged=", round(min(index(vchange)),digits=3),")", sep=""),cex.main=1.05)
-  } else {
+    title(paste(time2date(max(index(bayts)),format = "%Y.%j"), " (T=",time2date(change.confirmed,format = "%Y.%j"), " | Tflagged=", time2date(min(index(vchange)),format = "%Y.%j"), ")  [DOY]", sep = ""), cex.main = 1.05)
+    } else {
     if(!is.null(start)){abline(v=start,col='black',add=TRUE)}
     abline(v=oldflag,col='black',add=TRUE,lty='dashed')
-    title(paste(round(max(index(bayts)),digits=3)),cex.main=1.05)
+    title(paste(time2date(max(index(bayts))),format = "%Y.%j"),cex.main=1.05)
   }
 }

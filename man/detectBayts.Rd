@@ -4,12 +4,14 @@
 \alias{detectBayts}
 \title{Calculate change probability and detect changes}
 \usage{
-detectBayts(bayts, chi = 0.5, start = NULL, end = NULL)
+detectBayts(bayts, chi = 0.5, PNFmin = 0.5, start = NULL, end = NULL)
 }
 \arguments{
 \item{bayts}{"bayts" time series data frame created with \code{\link{createBayts}}}
 
 \item{chi}{Threshold of Pchange at which the change is confirmed; Default=0.5}
+
+\item{PNFmin}{threshold of pNF above which the first observation is flagged; Default=0.5}
 
 \item{start}{Start date of monitoring period. Default=NULL (start of "bayts" time series data frame).}
 
