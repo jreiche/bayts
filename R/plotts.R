@@ -9,7 +9,7 @@
 #' @param labL list of objects(s) of title for tsL
 #' @param colL list of objects(s) of colour for tsL
 #' @param xlim range of x-axis value; default is the range of the time series
-#' @param points add points (default = TRUE)
+#' @param pointsL list of TRUE and FLASE. (default = NULL = points are plotted for all time series)
 #' @param title plot title
 
 #' @examples  
