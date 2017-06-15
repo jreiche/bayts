@@ -28,7 +28,7 @@
 #' @export 
 
 
-plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, points=TRUE, title="") {
+plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, pointsL=NULL, title="") {
   # number of ts
   l <- length(tsL)
   
@@ -92,7 +92,11 @@ plotts <- function(tsL=list(),ylimL=list(),labL=list(),colL=list(), xlim=NULL, p
       # plot ts
       p <- plot(zts,xlim=range(xlim),axes=F, ylim=ylim, xlab="", ylab="",type="l",col=col,bty="n")
       box(lwd=0.5) 
-      if(points==TRUE) {p <- p + points(zts,xlim=range(xlim),ylim=ylim, pch = 19,cex=0.5,col=col)}
+      if(!is.null(pointsL)){
+        if(pointsL[[i]]==TRUE) {p <- p + points(zts,xlim=range(xlim),ylim=ylim, pch = 19,cex=0.5,col=col)}
+      } else {
+        p <- p + points(zts,xlim=range(xlim),ylim=ylim, pch = 19,cex=0.5,col=col)
+      }
       if (i==1){
         p <- axis(2, ylim=ylim,col=col,lwd=1,col.axis=col,line=0.5)
         mtext(2,text=lab,line=2.5)
