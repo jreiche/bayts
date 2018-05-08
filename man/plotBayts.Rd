@@ -19,6 +19,10 @@ plotBayts(bayts, labL = list(), ylimL = list(), colL = list(),
 \item{xlim}{range of x-axis value; default is the range of the time series}
 
 \item{start}{abline for e.g. showing the start of the monitoring period}
+
+\item{plotflag}{plot flagged change}
+
+\item{plotflag_old}{plot old flagged change}
 }
 \description{
 Plot original time series including indicated and detected changes. T.flagged and T.confirmed are plotted

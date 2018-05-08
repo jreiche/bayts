@@ -10,6 +10,8 @@
 #' @param colL list of colour for time series
 #' @param xlim range of x-axis value; default is the range of the time series
 #' @param start abline for e.g. showing the start of the monitoring period
+#' @param plotflag plot flagged change
+#' @param plotflag_old plot old flagged change
 
 #' @export 
 
