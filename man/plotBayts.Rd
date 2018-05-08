@@ -5,7 +5,7 @@
 \title{Plot original time series including indicated and detected changes (2 time series)}
 \usage{
 plotBayts(bayts, labL = list(), ylimL = list(), colL = list(),
-  xlim = NULL, start = NULL)
+  xlim = NULL, start = NULL, plotflag = TRUE, plotflag_old = TRUE)
 }
 \arguments{
 \item{bayts}{bayts time series data frame}

@@ -5,7 +5,7 @@
 \title{Plot multiple time series with different data ranges}
 \usage{
 plotts(tsL = list(), ylimL = list(), labL = list(), colL = list(),
-  xlim = NULL, points = TRUE, title = "")
+  xlim = NULL, pointsL = NULL, title = "")
 }
 \arguments{
 \item{tsL}{list of object(s) of class \code{\link{ts}}}
@@ -18,7 +18,7 @@ plotts(tsL = list(), ylimL = list(), labL = list(), colL = list(),
 
 \item{xlim}{range of x-axis value; default is the range of the time series}
 
-\item{points}{add points (default = TRUE)}
+\item{pointsL}{list of TRUE and FLASE. (default = NULL = points are plotted for all time series)}
 
 \item{title}{plot title}
 }
