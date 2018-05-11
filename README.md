@@ -6,7 +6,7 @@ Set of tools to apply the probabilistic approach of Reiche et al. (2015, under r
 The package includes the research version of the tools, which have a limited perforamce when applied to raster time series. The reserach version allows (i) to visualise and analyse the entire time series history and (ii) it stepwise applies the probablistic approach consecutively on each observation in the time series to emulate a near real-time scenario. 
 
 ## Probablistic approach 
-The basic version of the probabilistic approach has been published in Reiche et al., (2015). An improved version was published in Reiche et al. (under review). In Reiche et al., (under review), the probabilistic approach was used for the multi-sensor combination of Radar and optical data from Sentinel-1 and PALSAR-2 HV, together with Landsat for near-real time forest change detection in tropical dry forests in Bolivia. A brief description of the approach is provided below:
+The basic version of the probabilistic approach has been published in Reiche et al., (2015). An improved version was published in Reiche et al. (2018). In Reiche et al., (2018), the probabilistic approach was used for the multi-sensor combination of Radar and optical data from Sentinel-1 and PALSAR-2 HV, together with Landsat for near-real time forest change detection in tropical dry forests in Bolivia. A brief description of the approach is provided below:
 
 Figure 1 gives an schematic overview the probabilistic approach. We considered a near real-time scenario with past (t-1), current (t) and future observations (t+1), with multiple observations possible at the same observation date. First, once a new observation of either of the input time series was available (t = current) it was converted to the conditional NF probability (s<sup>NF</sup>) using the sensor specific forest (F) and non-forest (NF) probability density functions (pdf) (The sensor specific F and NF pdfs were derived using training data).
 The derived conditional NF probability was added to the combined time series of conditional NF probabilities derived from the previous LNDVIn, S1VVn and P2HVn time series observations (t–i). Second, we flagged a potential deforestation event in the case that the conditional NF probability was larger than 0.5. We calculated the probability of deforestation using iterative Bayesian updating. Future observation (t+i) were used to update the probability of deforestation in order to confirm or reject the flagged deforestation event.
@@ -52,7 +52,7 @@ External contributions are welcome. If you would like to contribute additional f
 
 Two examples are provided. Example 1 shows how to apply the functions on singel-pixel time series (Sentinel-1 VV and Landsat NDVI). Example 2 shows how to apply the functions to raster time series.
 
-## Example 1: Single-pixel example of the core concept (bayts function)
+## Example 1: Single-pixel example of the core bayts function
 
 Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016. (Source code: examples/bayts_pixel_example_v01.R)
 
@@ -117,14 +117,16 @@ bts$change.confirmed  # time at which change is confirmed
 ```
 
 
-## Example 2: Area example using baytsSpatial function 
+## Example 2: Applying deseasonalizeRaster and baytsSpatial function 
 Example applying method presented in Reiche et al., 2018 (RSE)
 
 Source code: examples/bayts_raster_example_v01.R
 
 Data:   Landsat NDVI and Sentinel-1 raster time series data from a dry forest area in Bolivia 
+
 Step 1: Spatial normalisation (deseasonalizeRaster) to remove dry forest seasonality in Landsat NDVI and Sentinel-1 time series observations             
+
 Step 2: Probablistic approach (bayts, baytsSpatial) used to combine Landsat and Sentinel-1 time series and to detect forest cover loss
 
 
-## Example 3: Area example using baytsDD and baytsSpatialDD function 
+## Example 3: Applying baytsDD and baytsSpatialDD function 
