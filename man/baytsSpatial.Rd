@@ -5,9 +5,9 @@
 \title{Function to run bayts on mulitple raster bricks}
 \usage{
 baytsSpatial(bL = list(NULL, ...), datesL = list(NULL, ...),
-  pdfL = list(NULL, ...), modL = list(), mask = NULL, bwf = c(0.1, 0.9),
-  chi = 0.9, PNFmin = 0.5, start = NULL, end = NULL,
-  pptype = "irregular", out_file = NULL, mc.cores = 1)
+  pdfL = list(NULL, ...), bwf = c(0.1, 0.9), chi = 0.9, PNFmin = 0.5,
+  start = NULL, end = NULL, pptype = "irregular", out_file = NULL,
+  mc.cores = 1)
 }
 \arguments{
 \item{bL}{list of raster bricks. Raster bricks need to have the same extent and spatial resolution.}
@@ -16,10 +16,6 @@ baytsSpatial(bL = list(NULL, ...), datesL = list(NULL, ...),
 
 \item{pdfL}{list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}).
 "pdf" object: pdf[1] = pdf type F, pdf[2] = pdf type NF, pdf[3] and pdf[4] = pdf parameter describing F, pdf[5] and pdf[6] = pdf parameter describing NF. pdf types supported: Gaussian or Weibull.}
-
-\item{modL}{list of modL - modulation of the time series observations. default=NULL}
-
-\item{mask}{(raster) mask at which method is applied; default = NULL (method is applied to all pixel)}
 
 \item{bwf}{block weighting function to truncate the NF probability; Default=c(0.1,0.9); (c(0,1) = no truncation)}
 

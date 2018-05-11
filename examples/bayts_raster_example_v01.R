@@ -88,4 +88,4 @@ plot(out,3)
 require(bfastSpatial)
 out2 <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
 # plot confirmed changes
-plot(out2,3)
+plot(out2,1)
