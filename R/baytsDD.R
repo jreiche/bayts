@@ -73,7 +73,7 @@ baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start, en
   }
   
   ## run bayts
-  bayts <- createBayts(tsL=des$rtsL,pdfL=des$pdfL,bwf=bwf)
+  bayts <- createBayts(tsL=rtsL,pdfL=pdfL,bwf=bwf)
   bayts <- detectBayts(bayts,chi=chi,PNFmin=PNFmin,start=start,end=end)
   
   rval <- list(
