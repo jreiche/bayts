@@ -16,11 +16,13 @@ The derived conditional NF probability was added to the combined time series of 
 
 ## Core functions
 
-bayts:          applies probabalistic approach to single pixel time series
-baytsSpatial:   applies bayts to raster time series
+bayts - applies probabalistic approach to single pixel time series (Method presented in Reiche et al., 2018, RSE)
 
-baytsDD:        bayts with apriori seasonal-trend model fitting to remove seasonality and derives F and NF distributions in data-driven                 way (Method presented in Reiche et al., 2018, Remote Sensing)
-baytsDDSpatial: applies baytsDD to raster time series
+baytsSpatial - applies bayts to raster time series
+
+baytsDD - bayts with apriori seasonal-trend model fitting to remove forest seasonality and derives forest and non-forest distributions in data-driven way (Method presented in Reiche et al., 2018, Remote Sensing)
+
+baytsDDSpatial - applies baytsDD to raster time series
 
 ## Install
 
