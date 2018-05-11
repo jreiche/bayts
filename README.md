@@ -26,7 +26,7 @@ install_github('jreiche/bayts')
 ## References
 Reiche, J., de Bruin, S., Hoekman, D. H., Verbesselt, J. & Herold, M. (2015): A Bayesian Approach to Combine Landsat and ALOS PALSAR Time Series for Near Real-Time Deforestation Detection. Remote Sensing, 7, 4973-4996. DOI:10.3390/rs70504973. (http://www.mdpi.com/2072-4292/7/5/4973)
 
-Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (under review): Improving near-real time deforestation monitoring in tropical dry forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2. Remote Sensing of Environment. 
+Reiche, J., Hamunyela, E., Verbesselt, J., Hoekman, D. & Herold, M. (2018): Improving near-real time deforestation monitoring in tropical dry forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2. Remote Sensing of Environment. https://doi.org/10.1016/j.rse.2017.10.034. (https://www.sciencedirect.com/science/article/pii/S0034425717304959)
 
 Hamunyela, E., Verbesselt, J., & Herold, M. (2016). Using spatial context to improve early detection of deforestation from Landsat time series. Remote Sensing of Environment, 172, 126–138. http://doi.org/10.1016/j.rse.2015.11.006
 
@@ -52,7 +52,7 @@ External contributions are welcome. If you would like to contribute additional f
 
 Two examples are provided. Example 1 shows how to apply the functions on singel-pixel time series (Sentinel-1 VV and Landsat NDVI). Example 2 shows how to apply the functions to raster time series.
 
-## Example 1: Single-pixel example (Deforestation)
+## Example 1: Single-pixel example (Deforestation) of the core concept
 
 Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016. (Source code: examples/bayts_pixel_example_v01.R)
 
@@ -117,98 +117,8 @@ bts$change.confirmed  # time at which change is confirmed
 ```
 
 
-## Example 2: Area example (Deforestation over dry forest)
+## Example 2: Area example using baytsSpatial function (Deforestation over dry forest; Reiche et al. 2018; RSE)
 
-Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al. (under review) (Source code: examples/bayts_raster_example_v01.R)
+Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al. (2018; RSE) 
 
-```r
-require(bayts)
-
-##############################################
-######### load data, create & plot time series
-
-# load raster bricks; Sentinel-1 VV (s1vv, 2014-10-07 - 2016-05-17) and Landsat NDVI (lndvi, 2005-01-03 - 2016-05-25) 
-data(s1vv_lndvi_raster)
-
-# get observation dates from raster brick
-lndvi_date <- as.Date(substr(names(lndvi),10,16), format="%Y%j")
-lndvi_date
-s1vv_date <- as.Date(substr(names(s1vv),2,11), format="%Y.%m.%d")
-s1vv_date
-
-# plot raster
-plot(s1vv,3)    # all areas are covered with forest
-plot(s1vv,85)   # deforestation in the top right part is visible
-plot(lndvi,290) # deforestation in the top right part is visible
-```
-
-Next, the original raster time series are spatially normalised to reduce dry froest seasonality. The spatial normalisation is done image wise. The method is described in Reiche et al., (under review) and is based on the spatial normalisation method published in Hamunyela et al. (2016).
-
-```r
-###################################################################################
-######### Spatial normalisation to reduce dry forest seasonality in the time series
-
-# "Deseasonalised pixel value" = "original pixel value" - "95% Percentile of the distribution of the raster"
-s1vvD <- deseasonalizeRaster(s1vv,p=0.95)
-lndviD <- deseasonalizeRaster(lndvi,p=0.95)
-
-######################################################
-######### plot original and deseasonalised time series
-
-plot(s1vv,85)
-
-```
-![fig](/examples/example2_fig3.JPG)<br />
-<sub>Figure 5. Sentinel-1 VV image aquired at 17-05-2016. The top right part of the images shows the deforested areas. </sub> 
-
-```r
-cell <- click(s1vv, n=1, cell=TRUE)[,1]
-#cell <- 3974
-
-# create time series using bfastts (bfast package)
-tlndvi <- bfastts(as.vector(lndvi[cell]),lndvi_date,type=c("irregular"))   # original Landsat NDVI
-tlndviD <- bfastts(as.vector(lndviD[cell]),lndvi_date,type=c("irregular")) # deseasonalised Landsat NDVI
-ts1vv <- bfastts(as.vector(s1vv[cell]),s1vv_date,type=c("irregular"))      # original Sentinel-1 VV
-ts1vvD <- bfastts(as.vector(s1vvD[cell]),s1vv_date,type=c("irregular"))    # deseasonalised Sentinel-1 VV
-
-# plot time series
-# strong dry forest seasonality visible in the Landsat NDVI time series
-plotts(tsL=list(tlndvi,tlndviD),labL=list("LNDVI","LNDVI_deseasonalised"))
-# weaker dry forest seasonality in the Sentinel-1 VV time series
-plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
-```
-![fig](/examples/example2_fig1.JPG)<br />
-<sub>Figure 6. Original (black) and spatialy normalised (blue) Landsat NDVI time series. </sub> 
-
-```r
-
-#############################################
-######### apply baytsSpatial and plot results
-
-# (0) subset Landsat NDVI time series to length of Sentinel-1 VV time series (start in 2014)
-lndviD <- subset(lndviD, 241:291, drop=FALSE)
-lndvi_date <- lndvi_date[241:291]
-
-# (1) Define parameters 
-# (1a) Sensor specific pdfs of forest (F) and non-foerst (NF). Used to calculate the conditional NF probability of each observation. Gaussian distribution of F and NF distribution. Distributions are described using mean and sd.
-s1vvD_pdf <- c(c("gaussian","gaussian"),c(-1,0.75),c(-4,1))  
-lndviD_pdf <- c(c("gaussian","gaussian"),c(0,0.075),c(-0.5,0.125))
-
-# (1b) Theshold of deforestation probability at which flagged change is confirmed (chi)
-chi = 0.9
-# (1c) Start date of monitoring
-start = 2016
-
-# (2) Apply baytsSpatial (it takes a long time; try parallel computing at next step)
-out <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start)
-# plot confirmed changes
-plot(out,3)
-
-# (3) Apply baytsSpatial using parallel computing; using mc.calc function from bfastSpatial package 
-require(bfastSpatial)
-out2 <- baytsSpatial(list(s1vvD,lndviD),list(s1vv_date,lndvi_date),list(s1vvD_pdf,lndviD_pdf),chi=chi,start=start,mc.cores = 10)
-# plot confirmed changes
-plot(out2,3)
-```
-![fig](/examples/example2_fig2.JPG)<br />
-<sub>Figure 7. Detected deforestation. </sub> 
+Source code: examples/bayts_raster_example_v01.R
