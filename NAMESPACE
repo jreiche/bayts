@@ -2,6 +2,7 @@
 
 export(bayts)
 export(baytsDD)
+export(baytsDDSpatial)
 export(baytsSpatial)
 export(calcPNF)
 export(calcPosterior)

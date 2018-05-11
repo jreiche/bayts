@@ -26,7 +26,14 @@ baytsDD(tsL = list(NULL, ...), msdL = list(), distNFL = list(), start,
 \item{distL}{list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL}
 }
 \value{
-deseasonlized time series (residuals or real values) and Gaussian pdfs of defining F and NF distribution
+List of 7 output paramter.
+(1) bayts: "bayts" time series data frame
+(2) flag: time at which unconfirmed change got flagged;
+(3) change.flagged: time at which confirmed change got flagged;
+(4) change.confirmed: time at which change is confirmed;
+(5) oldflag: time of earlier flagged but not confirmed changes;
+(6) vchange: vector of time steps from time at which change got flagged until confirmation;
+(7) vflag: vector of time steps at which unconfirmed change is flaged
 }
 \description{
 (i) deseasonalising time series using harmonic model fitting , (ii) deriving F and NF pdfs in data driven way and (iii) run bayts to detect forest chang
