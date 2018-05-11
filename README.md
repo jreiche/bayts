@@ -52,7 +52,7 @@ External contributions are welcome. If you would like to contribute additional f
 
 Two examples are provided. Example 1 shows how to apply the functions on singel-pixel time series (Sentinel-1 VV and Landsat NDVI). Example 2 shows how to apply the functions to raster time series.
 
-## Example 1: Single-pixel example (Deforestation) of the core concept
+## Example 1: Single-pixel example of the core concept (bayts function)
 
 Single-pixel example using a Sentinel-1 VV and Landsat NDVI time series, covering a deforestation event in 2016. (Source code: examples/bayts_pixel_example_v01.R)
 
@@ -117,8 +117,14 @@ bts$change.confirmed  # time at which change is confirmed
 ```
 
 
-## Example 2: Area example using baytsSpatial function (Deforestation over dry forest; Reiche et al. 2018; RSE)
-
-Raster example using Sentinel-1 VV and Landsat NDVI time series data for a dry forest site in Bolivia. The data is taken from Reiche et al. (2018; RSE) 
+## Example 2: Area example using baytsSpatial function 
+Example applying method presented in Reiche et al., 2018 (RSE)
 
 Source code: examples/bayts_raster_example_v01.R
+
+Data:   Landsat NDVI and Sentinel-1 raster time series data from a dry forest area in Bolivia 
+Step 1: Spatial normalisation (deseasonalizeRaster) to remove dry forest seasonality in Landsat NDVI and Sentinel-1 time series observations             
+Step 2: Probablistic approach (bayts, baytsSpatial) used to combine Landsat and Sentinel-1 time series and to detect forest cover loss
+
+
+## Example 3: Area example using baytsDD and baytsSpatialDD function 
