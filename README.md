@@ -120,13 +120,13 @@ bts$change.confirmed  # time at which change is confirmed
 ## Example 2: Applying deseasonalizeRaster and baytsSpatial function 
 Example applying method presented in Reiche et al., 2018 (RSE)
 
-<u>Source code:</u> examples/bayts_raster_example_v01.R
+SOURCE CODE: examples/bayts_raster_example_v01.R
 
-Data:   Landsat NDVI and Sentinel-1 raster time series data from a dry forest area in Bolivia 
+DATA:   Landsat NDVI and Sentinel-1 raster time series data from a dry forest area in Bolivia 
 
-Step 1: Spatial normalisation (deseasonalizeRaster) to remove dry forest seasonality in Landsat NDVI and Sentinel-1 time series observations             
+STEP 1: Spatial normalisation (deseasonalizeRaster) to remove dry forest seasonality in Landsat NDVI and Sentinel-1 time series observations             
 
-Step 2: Probablistic approach (bayts, baytsSpatial) used to combine Landsat and Sentinel-1 time series and to detect forest cover loss
+STEP 2: Probablistic approach (bayts, baytsSpatial) used to combine Landsat and Sentinel-1 time series and to detect forest cover loss
 
 
 ## Example 3: Applying baytsDD and baytsSpatialDD function 
