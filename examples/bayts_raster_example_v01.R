@@ -1,3 +1,22 @@
+###################################################################################################
+# Example applying method presented in Reiche et al., 2018 (RSE)                                  #                           #
+#                                                                                                 #
+# Data:   Landsat NDVI and Sentinel-1 raster time series data from a dry forest area in Bolivia   #
+#                                                                                                 #
+# Step 1: Spatial normalisation used to remove dry forest seasonality in Landsat NDVI and         #
+#         Sentinel-1 time series                                                                  #                     #
+#                                                                                                 #
+# Step 2: Probablistic approach (bayts, baytsSpatial) used to combine optical                     #
+#         and SAR time series and to detect change in near real-time                              #                                         #
+#         Probabalistic approach (bayts) published in Reiche et al., 2015, (Remote Sensing;       #
+#         https://doi.org/10.3390/rs70504973)                                                     #                                                              #
+#                                                                                                 #
+# Reiche et al., 2018 (RSE): "Improving near-real time deforestation monitoring in tropical dry   #
+# forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2"             #
+# http://dx.doi.org/10.1016/j.rse.2017.10.034)                                                    # 
+###################################################################################################
+
+# load bayts package
 require(bayts)
 
 ##############################################
@@ -42,7 +61,6 @@ ts1vvD <- bfastts(as.vector(s1vvD[cell]),s1vv_date,type=c("irregular"))    # des
 plotts(tsL=list(tlndvi,tlndviD),labL=list("LNDVI","LNDVI_deseasonalised"))
 # weaker dry forest seasonality in the Sentinel-1 VV time series
 plotts(list(ts1vv,ts1vvD),labL = list("S1VV [dB]","S1VV_deseasonalised [dB]"))
-
 
 #############################################
 ######### apply baytsSpatial and plot results

@@ -15,7 +15,7 @@
 #' @param msdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
 #' @param distL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
 #' @param modL list of modL - modulation of the time series observations. default=NULL
-
+#' @param mask (raster) mask at which method is applied; default = NULL (method is applied to all pixel)
 #' @param start start date of monitoring period. Default=NULL (start of input time series).
 #' @param end end date of monitoring period. Default=NULL (end of input time series)
 #' @param formula formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.

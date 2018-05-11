@@ -1,3 +1,13 @@
+###################################################################################################
+# Pixel example applying probabalistic approach (bayts) of Reiche et al., 2015 (Remote Sensing)   #                                 #                           #
+#                                                                                                 #
+# Data:   Landsat NDVI and Sentinel-1 pixel time series data from a dry forest area in Bolivia    #
+#                                                                                                 #
+# Step 1: Probablistic approach (bayts) used to combine Landsat NDVI and Sentinel-1               #
+#         time series and to detect change in near real-time                                      #                                         #
+#                                                                                                 #
+###################################################################################################
+
 require(bayts)
 
 ##############################################
