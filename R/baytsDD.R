@@ -29,7 +29,49 @@
 baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start, end = NULL, formula = response ~ trend + harmon, order = 1, chi=0.9, PNFmin = 0.5, bwf = c(0.1, 0.9),  residuals=FALSE){
   
   ## deseasonalise time series and derive pdfs
-  des <- deseasonalizeTSpdf(tsL=tsL, msdL=msdL, distNFL=distNFL, start=start, formula = formula, order = order,  residuals=residuals)
+  for (i in 1:length(tsL)){
+    ### STEP 1: MODEL HISTORY PERIOD USING SEASONAL AND TREND MODEL [taken from the bfast package]
+    ## create data frame
+    data_tspp <- bfastpp(tsL[[i]], order = order)
+    ## select hisotry period
+    ## potentially be expanded to select stable history period only -> see bfastmonitor function
+    history_tspp <- subset(data_tspp, time < start)
+    ## model history period using seasonal and trend model
+    test_lm <- lm(formula, data = history_tspp)
+    
+    ## Calculate residuals (deseasonalised observations)
+    data_tspp$prediction <- predict(test_lm, newdata = data_tspp)
+    data_tspp$residuals <- data_tspp$response - data_tspp$prediction
+    
+    ### STEP 2: DERIVE PDFS FOR STABLE CLASS (F) AND CHANGE CLASS (NF) FROM DESEASONALISED OBSERVATIONS
+    ###         IN THE HISTORY PERIOD
+    ## get standard deviation of residuals from history period
+    sd_history <-  sd(data_tspp$response[data_tspp$time < start])
+    median_history <- median(data_tspp$response[data_tspp$time < start])
+    
+    ## set NF distribution by (i) defined mean and sd (distNFL)
+    ## (ii) mean and sd from history period with modifications of sd (msdL) [data driven]
+    if(residuals==TRUE){
+      if(length(distNFL)>0){distNF<-distNFL[[i]]} else {distNF <- c(sd_history*msdL[[i]][3],sd_history*msdL[[i]][2])}
+      pdf <- c(c("gaussian","gaussian"),c(0,as.double(sd_history*msdL[[i]][1])),distNF)
+    } 
+    if(residuals==FALSE){
+      if(length(distNFL)>0){distNF<-distNFL[[i]]} else {distNF <- c(median_history+(sd_history*msdL[[i]][3]),sd_history*msdL[[i]][2])}
+      pdf <- c(c("gaussian","gaussian"),c(median_history,as.double(sd_history*msdL[[i]][1])),distNF)
+    }
+    
+    ### STEP 3: create lists of bfastts objects and pdfs for Bayts function 
+    if (exists("pdfL")) {
+      if(residuals==TRUE){rtsL <- c(rtsL, list(bfastts(data_tspp$residuals,time2date(data_tspp$time),type="irregular")))}
+      if(residuals==FALSE){rtsL <- c(rtsL, list(bfastts(median_history+data_tspp$residuals,time2date(data_tspp$time),type="irregular")))}
+      pdfL <- c(pdfL, list(pdf))
+    } else {
+      if(residuals==TRUE){rtsL <- list(bfastts(data_tspp$residuals,time2date(data_tspp$time),type="irregular"))}
+      if(residuals==FALSE){rtsL <- list(bfastts(median_history+data_tspp$residuals,time2date(data_tspp$time),type="irregular"))}
+      pdfL <- list(pdf)
+    }
+  }
+  
   ## run bayts
   bayts <- createBayts(tsL=des$rtsL,pdfL=des$pdfL,bwf=bwf)
   bayts <- detectBayts(bayts,chi=chi,PNFmin=PNFmin,start=start,end=end)
