@@ -120,7 +120,7 @@ bts$change.confirmed  # time at which change is confirmed
 ## Example 2: Applying deseasonalizeRaster and baytsSpatial function 
 Example applying method presented in Reiche et al., 2018 (RSE)
 
-Source code: examples/bayts_raster_example_v01.R
+<u>Source code:</u> examples/bayts_raster_example_v01.R
 
 Data:   Landsat NDVI and Sentinel-1 raster time series data from a dry forest area in Bolivia 
 
