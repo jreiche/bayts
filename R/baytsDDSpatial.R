@@ -61,7 +61,7 @@ baytsDDSpatial <- function(bL = list(NULL, ...), datesL = list(NULL, ...), modL 
           m <- modL[[i]]
           b <- b+m
         } 
-        ts <- bfastts(b, d, type = pptype)
+        ts <- bfastts(b, d, type = "irregular")
         if (length(na.omit(as.zoo(ts)) > 0)) {
           if (exists("tsL2")) {
             tsL2 <- c(tsL2, list(ts))
