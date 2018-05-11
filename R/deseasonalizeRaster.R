@@ -1,6 +1,7 @@
-#' @title Deseasonlize a raster
+#' @title Deseasonlize a raster using spatial normalisation 
 #' 
 #' @description Deseasonlize a single raster layer or each individual raster layer in a brick. "Deseasonlized pixel value" = "original pixel value" - "percentile of the distribution of the raster"
+#' @description Method is based on Hamunyela et al., 2015 (RSE) and is described in detail in Reiche et al., 2018 (RSE)
 
 #' @author Johannes Reiche (Wageningen University)
 

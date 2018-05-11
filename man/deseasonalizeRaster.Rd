@@ -2,7 +2,7 @@
 % Please edit documentation in R/deseasonalizeRaster.R
 \name{deseasonalizeRaster}
 \alias{deseasonalizeRaster}
-\title{Deseasonlize a raster}
+\title{Deseasonlize a raster using spatial normalisation}
 \usage{
 deseasonalizeRaster(b, percentile = 0.95, min = NULL, max = NULL)
 }
