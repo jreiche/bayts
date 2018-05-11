@@ -77,11 +77,11 @@ baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start, en
   bayts <- detectBayts(bayts,chi=chi,PNFmin=PNFmin,start=start,end=end)
   
   rval <- list(
-    data_tspp = des$data_tspp,
+    data_tspp = data_tspp,
     bayts = bayts,
     start = start,
     chi = chi,
-    pdf = des$pdfL,
+    pdf = pdfL,
     flag = index(bayts[min(which(bayts$Flag=="Flag"))]),
     change.flagged = index(bayts[min(which(bayts$Flag=="Change"))]),
     change.confirmed = index(bayts[max(which(bayts$Flag=="Change"))]),
