@@ -19,6 +19,8 @@ baytsDDSpatial(bL = list(NULL, ...), datesL = list(NULL, ...),
 
 \item{msdL}{list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)}
 
+\item{mask}{(raster) mask at which method is applied; default = NULL (method is applied to all pixel)}
+
 \item{start}{start date of monitoring period. Default=NULL (start of input time series).}
 
 \item{end}{end date of monitoring period. Default=NULL (end of input time series)}
