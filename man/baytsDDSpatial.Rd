@@ -4,11 +4,11 @@
 \alias{baytsDDSpatial}
 \title{Function to run baytsDD on (mulitple) raster bricks}
 \usage{
-baytsDDSpatial(bL = list(NULL, ...), datesL = list(NULL, ...),
-  modL = list(), msdL = list(), distNFL = list(), mask = NULL,
-  start = NULL, end = NULL, formula = response ~ trend + harmon,
-  order = 1, chi = 0.9, PNFmin = 0.5, bwf = c(0.1, 0.9), mc.cores = 1,
-  out_file = NULL)
+baytsDDSpatial(bL = list(), datesL = list(), modL = list(),
+  msdL = list(), distNFL = list(), formulaL = list(), orderL = list(),
+  mask = NULL, start_history = NULL, end_history = NULL, start,
+  end = NULL, chi = 0.9, PNFmin = 0.5, bwf = c(0.1, 0.9),
+  mc.cores = 1, out_file = NULL)
 }
 \arguments{
 \item{bL}{list of raster bricks. Raster bricks need to have the same extent and spatial resolution.}
@@ -19,15 +19,19 @@ baytsDDSpatial(bL = list(NULL, ...), datesL = list(NULL, ...),
 
 \item{msdL}{list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)}
 
+\item{formulaL}{list of formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.}
+
+\item{orderL}{list of numeric. Order of the harmonic term, defaulting to 3.}
+
 \item{mask}{(raster) mask at which method is applied; default = NULL (method is applied to all pixel)}
+
+\item{start_history}{Start date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (start of input time series)}
+
+\item{end_history}{End date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (Start of the monitoring period is used)}
 
 \item{start}{start date of monitoring period. Default=NULL (start of input time series).}
 
 \item{end}{end date of monitoring period. Default=NULL (end of input time series)}
-
-\item{formula}{formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.}
-
-\item{order}{numeric. Order of the harmonic term, defaulting to 3.}
 
 \item{chi}{threshold of Pchange at which the change is confirmed; Default=0.5}
 
