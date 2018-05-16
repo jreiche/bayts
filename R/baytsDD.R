@@ -9,12 +9,12 @@
 #' @param pdfL list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}). 
 #' @param msdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
 #' @param distNFL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
+#' @param formulaL list of formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
+#' @param order list ofnumeric. Order of the harmonic term, defaulting to 3.
 #' @param start_history Start date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (start of input time series)
 #' @param end_history End date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (Start of the monitoring period is used)
 #' @param start Start date of monitoring period. Default=NULL (start of input time series)
 #' @param end End date of monitoring period. Default=NULL (start of input time series)
-#' @param formula formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
-#' @param order numeric. Order of the harmonic term, defaulting to 3.
 #' @param bwf block weighting function to truncate the NF probability; Default=c(0.1,0.9); (c(0,1) = no truncation) 
 #' @param chi Threshold of Pchange at which the change is confirmed; Default=0.5
 #' @param PNFmin threshold of pNF above which the first observation is flagged; Default=0.5
@@ -33,7 +33,7 @@
 
 #' @export 
 
-baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start_history = NULL, end_history = NULL, start, end = NULL, formula = response ~ trend + harmon, order = 1, bwf = c(0.1, 0.9), chi=0.9, PNFmin = 0.5, residuals=FALSE){
+baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), formulaL=list(), orderL=list(),start_history = NULL, end_history = NULL, start, end = NULL, bwf = c(0.1, 0.9), chi=0.9, PNFmin = 0.5, residuals=FALSE){
   
   ## set end of the history period
   if (is.null(end_history)) {end_history <- start}
@@ -42,14 +42,14 @@ baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start_his
   for (i in 1:length(tsL)){
     ### STEP 1: MODEL HISTORY PERIOD USING SEASONAL AND TREND MODEL [taken from the bfast package]
     ## create data frame
-    data_tspp <- bfastpp(tsL[[i]], order = order)
+    data_tspp <- bfastpp(tsL[[i]], order = orderL[[i]])
     
     ## get history
     history_tspp <- subset(data_tspp, time < end_history)
     if(!is.null(start_history)){history_tspp <- subset(history_tspp,time >= start_history)}
     
     ## model history period using seasonal and trend model
-    test_lm <- lm(formula, data = history_tspp)
+    test_lm <- lm(formulaL[[i]], data = history_tspp)
     
     ## Calculate residuals (deseasonalised observations)
     data_tspp$prediction <- predict(test_lm, newdata = data_tspp)

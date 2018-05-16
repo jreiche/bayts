@@ -15,13 +15,13 @@
 #' @param msdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
 #' @param distL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
 #' @param modL list of modL - modulation of the time series observations. default=NULL
+#' @param formulaL list of formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
+#' @param orderL list of numeric. Order of the harmonic term, defaulting to 3.
 #' @param mask (raster) mask at which method is applied; default = NULL (method is applied to all pixel)
 #' @param start_history Start date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (start of input time series)
 #' @param end_history End date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (Start of the monitoring period is used)
 #' @param start start date of monitoring period. Default=NULL (start of input time series).
 #' @param end end date of monitoring period. Default=NULL (end of input time series)
-#' @param formula formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
-#' @param order numeric. Order of the harmonic term, defaulting to 3.
 #' @param bwf block weighting function to truncate the NF probability; Default=c(0.1,0.9); (c(0,1) = no truncation) 
 #' @param chi threshold of Pchange at which the change is confirmed; Default=0.5
 #' @param PNFmin threshold of pNF above which the first observation is flagged; Default=0.5
@@ -40,7 +40,7 @@
 
 #' @export 
 
-baytsDDSpatial <- function(bL = list(NULL, ...), datesL = list(NULL, ...), modL = list(), msdL=list(), distNFL=list(), mask=NULL, start_history = NULL, end_history = NULL, start, end = NULL, formula=response ~ trend + harmon, order=1, chi=0.9, PNFmin=0.5, bwf = c(0.1, 0.9),mc.cores=1, out_file = NULL){
+baytsDDSpatial <- function(bL = list(NULL, ...), datesL = list(NULL, ...), modL = list(), msdL=list(), distNFL=list(), formulaL=list(), orderL=list(), mask=NULL, start_history = NULL, end_history = NULL, start, end = NULL, chi=0.9, PNFmin=0.5, bwf = c(0.1, 0.9),mc.cores=1, out_file = NULL){
   
   is.integer0 <- function(x) {is.integer(x) && length(x) == 0L}
   
@@ -75,7 +75,7 @@ baytsDDSpatial <- function(bL = list(NULL, ...), datesL = list(NULL, ...), modL 
         l <- l + length(d)
       }
       
-      bts <- try(baytsDD(tsL=tsL2,distNFL=distNFL,msdL=msdL,start_history=start_history,end_history=end_history,start=start,end=end,formula=formula,order=order,chi=chi, PNFmin=PNFmin, bwf = bwf))
+      bts <- try(baytsDD(tsL=tsL2,distNFL=distNFL,msdL=msdL,start_history=start_history,end_history=end_history,start=start,end=end,formulaL=formulaL,orderL=orderL,chi=chi, PNFmin=PNFmin, bwf = bwf))
       
       if(class(bts) == 'try-error') {
         res <- cbind(NA,NA,NA,NA,NA)
