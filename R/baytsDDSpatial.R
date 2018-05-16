@@ -40,7 +40,7 @@
 
 #' @export 
 
-baytsDDSpatial <- function(bL = list(NULL, ...), datesL = list(NULL, ...), modL = list(), msdL=list(), distNFL=list(), formulaL=list(), orderL=list(), mask=NULL, start_history = NULL, end_history = NULL, start, end = NULL, chi=0.9, PNFmin=0.5, bwf = c(0.1, 0.9),mc.cores=1, out_file = NULL){
+baytsDDSpatial <- function(bL = list(), datesL = list(), modL = list(), msdL=list(), distNFL=list(), formulaL=list(), orderL=list(), mask=NULL, start_history = NULL, end_history = NULL, start, end = NULL, chi=0.9, PNFmin=0.5, bwf = c(0.1, 0.9),mc.cores=1, out_file = NULL){
   
   is.integer0 <- function(x) {is.integer(x) && length(x) == 0L}
   
