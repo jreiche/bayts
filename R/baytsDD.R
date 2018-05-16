@@ -8,34 +8,46 @@
 #' @param tsL list of object(s) of class \code{\link{ts}}.
 #' @param pdfL list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}). 
 #' @param msdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
-#' @param distL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
-
+#' @param distNFL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
+#' @param start_history Start date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (start of input time series)
+#' @param end_history End date of history period used to model the seasonality and derive F and NF PDFs. Default=NULL (Start of the monitoring period is used)
+#' @param start Start date of monitoring period. Default=NULL (start of input time series)
+#' @param end End date of monitoring period. Default=NULL (start of input time series)
 #' @param formula formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
 #' @param order numeric. Order of the harmonic term, defaulting to 3.
-#' @param start Start date of monitoring period. Default=NULL (start of input time series). Period before is used for deseasonalisation
+#' @param bwf block weighting function to truncate the NF probability; Default=c(0.1,0.9); (c(0,1) = no truncation) 
+#' @param chi Threshold of Pchange at which the change is confirmed; Default=0.5
+#' @param PNFmin threshold of pNF above which the first observation is flagged; Default=0.5
 #' @param residuals TRUE = output are time series of deseasonalised "residuals"; FALSE = time series of deseasonalised values
 
 #' @return List of 7 output paramter. 
-#' (1) bayts: "bayts" time series data frame 
-#' (2) flag: time at which unconfirmed change got flagged; 
-#' (3) change.flagged: time at which confirmed change got flagged; 
-#' (4) change.confirmed: time at which change is confirmed; 
-#' (5) oldflag: time of earlier flagged but not confirmed changes; 
-#' (6) vchange: vector of time steps from time at which change got flagged until confirmation; 
-#' (7) vflag: vector of time steps at which unconfirmed change is flaged
+#' (1) data_tspp: "data_tspp" time series data frame
+#' (2) bayts: "bayts" time series data frame 
+#' (3) pdf: pdfs for forest and non-forest 
+#' (4) flag: time at which unconfirmed change got flagged; 
+#' (5) change.flagged: time at which confirmed change got flagged; 
+#' (6) change.confirmed: time at which change is confirmed; 
+#' (7) oldflag: time of earlier flagged but not confirmed changes; 
+#' (8) vchange: vector of time steps from time at which change got flagged until confirmation; 
+#' (9) vflag: vector of time steps at which unconfirmed change is flaged
 
 #' @export 
 
-baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start, end = NULL, formula = response ~ trend + harmon, order = 1, chi=0.9, PNFmin = 0.5, bwf = c(0.1, 0.9),  residuals=FALSE){
+baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start_history = NULL, end_history = NULL, start, end = NULL, formula = response ~ trend + harmon, order = 1, bwf = c(0.1, 0.9), chi=0.9, PNFmin = 0.5, residuals=FALSE){
+  
+  ## set end of the history period
+  if (is.null(end_history)) {end_history <- start}
   
   ## deseasonalise time series and derive pdfs
   for (i in 1:length(tsL)){
     ### STEP 1: MODEL HISTORY PERIOD USING SEASONAL AND TREND MODEL [taken from the bfast package]
     ## create data frame
     data_tspp <- bfastpp(tsL[[i]], order = order)
-    ## select hisotry period
-    ## potentially be expanded to select stable history period only -> see bfastmonitor function
-    history_tspp <- subset(data_tspp, time < start)
+    
+    ## get history
+    history_tspp <- subset(data_tspp, time < end_history)
+    if(!is.null(start_history)){history_tspp <- subset(history_tspp,time >= start_history)}
+    
     ## model history period using seasonal and trend model
     test_lm <- lm(formula, data = history_tspp)
     
@@ -46,8 +58,8 @@ baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start, en
     ### STEP 2: DERIVE PDFS FOR STABLE CLASS (F) AND CHANGE CLASS (NF) FROM DESEASONALISED OBSERVATIONS
     ###         IN THE HISTORY PERIOD
     ## get standard deviation of residuals from history period
-    sd_history <-  sd(data_tspp$response[data_tspp$time < start])
-    median_history <- median(data_tspp$response[data_tspp$time < start])
+    sd_history <-  sd(data_tspp$response[data_tspp$time < end_history])
+    median_history <- median(data_tspp$response[data_tspp$time < end_history])
     
     ## set NF distribution by (i) defined mean and sd (distNFL)
     ## (ii) mean and sd from history period with modifications of sd (msdL) [data driven]
@@ -79,8 +91,6 @@ baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start, en
   rval <- list(
     data_tspp = data_tspp,
     bayts = bayts,
-    start = start,
-    chi = chi,
     pdf = pdfL,
     flag = index(bayts[min(which(bayts$Flag=="Flag"))]),
     change.flagged = index(bayts[min(which(bayts$Flag=="Change"))]),
