@@ -37,3 +37,20 @@
 #' data(s1vv_lndvi_raster)
 #' 
 #' plot(s1vv,1)
+#' 
+#' @title Sentinel-1 VH data from Riau, Indonesia
+#' 
+#' @description Sentinel-1 VH time series raster brick; 09/2014 - 06/2017. 
+#' Data has been taken from an area in Riau, Indonesia. Please contact Johannes Reiche (johannes.reiche@wur) for more information. 
+#' 
+#' @name s1vh_riau_raster.rda
+#' 
+#' @usage data(s1vh_riau_raster)
+#' 
+#' @author Johannes Reiche
+#' 
+#' @examples
+#' ## load test data
+#' data(s1vh_riau_raster)
+#' 
+#' plot(s1vh,3)

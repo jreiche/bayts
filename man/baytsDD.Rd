@@ -4,7 +4,7 @@
 \alias{baytsDD}
 \title{baytsDD}
 \usage{
-baytsDD(tsL = list(NULL, ...), msdL = list(), distNFL = list(),
+baytsDD(tsL = list(NULL, ...), pdfsdL = list(), distNFL = list(),
   start_history = NULL, end_history = NULL, start, end = NULL,
   formulaL = list(), orderL = list(), bwf = c(0.1, 0.9), chi = 0.9,
   PNFmin = 0.5, residuals = FALSE)
@@ -12,7 +12,7 @@ baytsDD(tsL = list(NULL, ...), msdL = list(), distNFL = list(),
 \arguments{
 \item{tsL}{list of object(s) of class \code{\link{ts}}.}
 
-\item{msdL}{list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)}
+\item{pdfsdL}{list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)}
 
 \item{distNFL}{list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL}
 
@@ -33,8 +33,6 @@ baytsDD(tsL = list(NULL, ...), msdL = list(), distNFL = list(),
 \item{PNFmin}{threshold of pNF above which the first observation is flagged; Default=0.5}
 
 \item{residuals}{TRUE = output are time series of deseasonalised "residuals"; FALSE = time series of deseasonalised values}
-
-\item{pdfL}{list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}).}
 
 \item{order}{list ofnumeric. Order of the harmonic term, defaulting to 3.}
 }

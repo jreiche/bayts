@@ -6,8 +6,7 @@
 #' @author Johannes Reiche (Wageningen University)
 
 #' @param tsL list of object(s) of class \code{\link{ts}}.
-#' @param pdfL list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}). 
-#' @param msdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
+#' @param pdfsdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
 #' @param distNFL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
 #' @param formulaL list of formula for the regression model. The default is "response ~ harmon", i.e., a harmonic season component without trend component: "response ~ trend + harmon"; With trend: Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
 #' @param order list ofnumeric. Order of the harmonic term, defaulting to 3.
@@ -34,7 +33,7 @@
 #' @export 
 
 
-baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start_history = NULL, end_history = NULL, start, end = NULL, formulaL=list(), orderL=list(), bwf = c(0.1, 0.9), chi=0.9, PNFmin = 0.5, residuals=FALSE){
+baytsDD <- function (tsL=list(NULL, ...), pdfsdL=list(), distNFL=list(), start_history = NULL, end_history = NULL, start, end = NULL, formulaL=list(), orderL=list(), bwf = c(0.1, 0.9), chi=0.9, PNFmin = 0.5, residuals=FALSE){
   
   ## set end of the history period
   if (is.null(end_history)) {end_history <- start}
@@ -66,14 +65,14 @@ baytsDD <- function (tsL=list(NULL, ...), msdL=list(), distNFL=list(), start_his
     median_history <- median(data_tspp$response[data_tspp$time < end_history])
     
     ## set NF distribution by (i) defined mean and sd (distNFL)
-    ## (ii) mean and sd from history period with modifications of sd (msdL) [data driven]
+    ## (ii) mean and sd from history period with modifications of sd (pdfsdL) [data driven]
     if(residuals==TRUE){
-      if(length(distNFL)>0){distNF<-distNFL[[i]]} else {distNF <- c(sd_history*msdL[[i]][3],sd_history*msdL[[i]][2])}
-      pdf <- c(c("gaussian","gaussian"),c(0,as.double(sd_history*msdL[[i]][1])),distNF)
+      if(length(distNFL)>0){distNF<-distNFL[[i]]} else {distNF <- c(sd_history*pdfsdL[[i]][2],sd_history*pdfsdL[[i]][3])}
+      pdf <- c(c("gaussian","gaussian"),c(0,as.double(sd_history*pdfsdL[[i]][1])),distNF)
     } 
     if(residuals==FALSE){
-      if(length(distNFL)>0){distNF<-distNFL[[i]]} else {distNF <- c(median_history+(sd_history*msdL[[i]][3]),sd_history*msdL[[i]][2])}
-      pdf <- c(c("gaussian","gaussian"),c(median_history,as.double(sd_history*msdL[[i]][1])),distNF)
+      if(length(distNFL)>0){distNF<-distNFL[[i]]} else {distNF <- c(median_history+(sd_history*pdfsdL[[i]][2]),sd_history*pdfsdL[[i]][3])}
+      pdf <- c(c("gaussian","gaussian"),c(median_history,as.double(sd_history*pdfsdL[[i]][1])),distNF)
     }
     
     ### STEP 3: create lists of bfastts objects and pdfs for Bayts function 
