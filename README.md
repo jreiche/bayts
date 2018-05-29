@@ -142,6 +142,7 @@ STEP 2: Probablistic approach (bayts, baytsSpatial) used to combine Landsat and 
 
 ## Example 3: Applying baytsDD and baytsSpatialDD function 
 Example applying method presented in Reiche et al., 2018 (Remote Sensing)
+
 SOURCE CODE: examples/baytsDD_raster_example_v01.R
 
 DATA:   Sentinel-1 raster time series data from Riau, Sumatra
@@ -151,22 +152,3 @@ Step 1: Use season-trend fitting to model and remove forest seasonality
 Step 2: Data-driven way to derive F and NF distribution (pdfs) to paramterise bayts 
 
 Step 3: Probablistic approach (bayts, baytsSpatial) used to combine optical and SAR time series and to detect change in near real-time   
-
-
-
-# Example applying method presented in Reiche et al., 2018 (Remote Sensing)                       #                           #
-#                                                                                                 #
-# Data:   Sentinel-1 raster time series data from Riau, Sumatra                                   #
-#                                                                                                 #
-# Step 1: Use season-trend fitting to model and remove forest seasonality                         #                     #
-#                                                                                                 #
-# Step 2: Data-driven way to derive F and NF distribution (pdfs) to paramterise bayts             #
-#                                                                                                 #
-# Step 3: Probablistic approach (bayts, baytsSpatial) used to combine optical                     #
-#         and SAR time series and to detect change in near real-time                              #                                         #
-#         Probabalistic approach (bayts) published in Reiche et al., 2015, (Remote Sensing;       #
-#         https://doi.org/10.3390/rs70504973)                                                     #                                                              #
-#                                                                                                 #
-# Reiche et al., 2018 (RSE): "Improving near-real time deforestation monitoring in tropical dry   #
-# forests by combining dense Sentinel-1 time series with Landsat and ALOS-2 PALSAR-2"             #
-# http://dx.doi.org/10.1016/j.rse.2017.10.034)   
