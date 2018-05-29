@@ -4,8 +4,8 @@
 \alias{baytsDDSpatial}
 \title{Function to run baytsDD on (mulitple) raster bricks}
 \usage{
-baytsDDSpatial(bL = list(), datesL = list(), modL = list(),
-  msdL = list(), distNFL = list(), formulaL = list(), orderL = list(),
+baytsDDSpatial(bL = list(), datesL = list(), pdfsdL = list(),
+  distNFL = list(), modL = list(), formulaL = list(), orderL = list(),
   mask = NULL, start_history = NULL, end_history = NULL, start,
   end = NULL, chi = 0.9, PNFmin = 0.5, bwf = c(0.1, 0.9),
   mc.cores = 1, out_file = NULL)
@@ -15,9 +15,9 @@ baytsDDSpatial(bL = list(), datesL = list(), modL = list(),
 
 \item{datesL}{list of time vector of the format: "2014-10-07".}
 
-\item{modL}{list of modL - modulation of the time series observations. default=NULL}
+\item{pdfsdL}{list of pdfsd object(s) describing the modulation of the sd of F and NF sd(F),mean(NF),sd(NF) (e.g. pdfsd = c(2,-4,2))}
 
-\item{msdL}{list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)}
+\item{modL}{list of modL - modulation of the time series observations. default=NULL}
 
 \item{formulaL}{list of formula for the regression model. The default is response ~ trend + harmon, i.e., a linear trend and a harmonic season component. Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.}
 
@@ -40,9 +40,6 @@ baytsDDSpatial(bL = list(), datesL = list(), modL = list(),
 \item{bwf}{block weighting function to truncate the NF probability; Default=c(0.1,0.9); (c(0,1) = no truncation)}
 
 \item{mc.cores}{numeric. number of cores to be used for the job. See \code{\link{mc.calc}} for more details (default = 1)}
-
-\item{pdfL}{list of "pdf" object(s) describing F and NF distributions (see \code{\link{calcPNF}}).
-"pdf" object: pdf[1] = pdf type F, pdf[2] = pdf type NF, pdf[3] and pdf[4] = pdf parameter describing F, pdf[5] and pdf[6] = pdf parameter describing NF. pdf types supported: Gaussian or Weibull.}
 
 \item{distL}{list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL}
 
