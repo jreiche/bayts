@@ -49,8 +49,8 @@ Hamunyela, E., Verbesselt, J., & Herold, M. (2016). Using spatial context to imp
   author = {Reiche, Johannes},
   title = {{bayts}},
   url = {https://github.com/jreiche/bayts},
-  version = {1.0},
-  date = {2017-04-12},
+  version = {1.1},
+  date = {2019-01-12},
   doi = {10.5281/zenodo.545792}
 }
 ```
