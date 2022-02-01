@@ -6,7 +6,7 @@
 #' @author Johannes Reiche (Wageningen University)
 
 #' @param tsL list of object(s) of class \code{\link{ts}}.
-#' @param pdfsdL list of msdl object(s) describing the modulation of the sd of F and NF sd(F),sd(NF),mean(NF) (e.g. 2,2,-4)
+#' @param pdfsdL list of msdl object(s) describing the modulation of the sd of F and NF: sd(F),mean(NF),sd(NF) (e.g. pdfsd = c(2,-4,2))
 #' @param distNFL list of "distNF" object(s) describing the mean and sd of the NF distribution in case no data driven way to derive the NF distribution is wanted; default=NULL
 #' @param formulaL list of formula for the regression model. The default is "response ~ harmon", i.e., a harmonic season component without trend component: "response ~ trend + harmon"; With trend: Other specifications are possible using all terms set up by bfastpp, i.e., season (seasonal pattern with dummy variables), lag (autoregressive terms), slag (seasonal autoregressive terms), or xreg (further covariates). See bfastpp for details.
 #' @param order list ofnumeric. Order of the harmonic term, defaulting to 3.
